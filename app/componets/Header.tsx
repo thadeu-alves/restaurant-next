@@ -7,11 +7,6 @@ import { useEffect, useState } from "react";
 export function Header() {
     const [open, setOpen] = useState(false);
 
-    const colors = {
-        primary: "#4B352A",
-        secondary: "#FFF",
-    };
-
     const links = [
         {
             href: "/",
@@ -41,19 +36,19 @@ export function Header() {
     }
 
     return (
-        <div className={`bg-[${colors.primary}]`}>
+        <div className={`bg-primary`}>
             <nav
-                className={`flex justify-between bg-[${colors.primary}] px-6 py-3  max-w-[1020px] mx-auto`}
+                className={`flex justify-between bg-primary px-6 py-3  max-w-[1020px] mx-auto`}
             >
                 <Link href="/">
                     <h1
-                        className={`text-2xl font-medium text-[${colors.secondary}]`}
+                        className={`text-2xl font-medium text-[var(--secondary)]`}
                     >
                         Logo
                     </h1>
                 </Link>
                 <button
-                    className={`bg-[${colors.secondary}] w-fit p-2 rounded-xl lg:hidden`}
+                    className={`bg-[var(--secondary)] w-fit p-2 rounded-xl lg:hidden`}
                     onClick={handleSidebar}
                 >
                     <Image
@@ -81,9 +76,7 @@ export function Header() {
                 </ul>
 
                 <div
-                    className={`lg:hidden fixed inset-0 w-full h-screen bg-[${
-                        colors.primary
-                    }] border-r border-r-black z-50 transition-transform duration-300 ease-in-out transform ${
+                    className={`lg:hidden fixed inset-0 w-full h-screen bg-primary border-r border-r-black z-50 transition-transform duration-300 ease-in-out transform ${
                         open
                             ? "translate-x-0"
                             : "-translate-x-full"
@@ -91,7 +84,7 @@ export function Header() {
                 >
                     <div className="p-6 flex flex-col h-full">
                         <button
-                            className={`bg-[${colors.secondary}] w-fit p-2 rounded-xl fixed `}
+                            className={`bg-[var(--secondary)] w-fit p-2 rounded-xl fixed `}
                             onClick={handleSidebar}
                         >
                             <h1 className="w-6 font-medium">
@@ -107,7 +100,7 @@ export function Header() {
                                         key={link.title}
                                     >
                                         <li
-                                            className={`font-medium text-2xl text-[${colors.secondary}]`}
+                                            className={`font-medium text-2xl text-[var(--secondary)]`}
                                         >
                                             {link.title}
                                         </li>

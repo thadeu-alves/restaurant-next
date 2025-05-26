@@ -1,5 +1,6 @@
 import { FoodList } from "../componets/FoodList";
-import PageHeader from "../componets/PageHeader";
+import { PageHeader } from "../componets/PageHeader";
+import { ButtonLink } from "../componets/ui/ButtonLink";
 
 export default function page() {
     return (
@@ -9,11 +10,9 @@ export default function page() {
                 Special Menu
             </h1>
             <FoodList />
-            <div className="bg-green-500 w-1/2 text-center py-2 rounded text-white mx-auto">
-                <h1 className="font-semibold ">
-                    DELIVERY NOW
-                </h1>
-            </div>
+            <ButtonLink color="bg-green-500">
+                DELIVERY NOW
+            </ButtonLink>
         </div>
     );
 }

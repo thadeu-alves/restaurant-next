@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-export default function PageHeader({
+export function PageHeader({
     children,
 }: Readonly<{
     children: React.ReactNode;

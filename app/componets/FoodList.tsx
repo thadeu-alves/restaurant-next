@@ -1,8 +1,8 @@
 "use client";
 
 import { Categoria } from "@/types";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { Food } from "./Food";
 
 export function FoodList() {
     const [categorias, setCategorias] = useState<
@@ -49,29 +49,17 @@ export function FoodList() {
                             {cat.nome}
                         </h1>
                         <ul className="space-y-4">
-                            {cat.comidas?.map((com) => {
-                                return (
-                                    <li
-                                        key={com.id}
-                                        className="border-2 border-black rounded-2xl flex justify-between items-center pr-4 overflow-hidden shadow-md"
-                                    >
-                                        <Image
-                                            alt="back icon"
-                                            src="/food.png"
-                                            width={50}
-                                            height={50}
-                                            className="object-cover w-25 h-20"
+                            {cat.comidas?.map(
+                                ({ id, preco, titulo }) => {
+                                    return (
+                                        <Food
+                                            preco={preco}
+                                            titulo={titulo}
+                                            key={id}
                                         />
-                                        <h1 className="font-semibold text-xl">
-                                            {com.titulo}{" "}
-                                        </h1>
-                                        <h1 className="text-amber-400 font-semibold text-2xl">
-                                            R$
-                                            {com.preco}
-                                        </h1>
-                                    </li>
-                                );
-                            })}
+                                    );
+                                }
+                            )}
                         </ul>
                     </div>
                 );
