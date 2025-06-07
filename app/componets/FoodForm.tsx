@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { FormLabel } from "./ui/FormLabel";
+import { FormSubmit } from "./ui/FormSubmit";
 
 export function FoodForm() {
     const router = useRouter();
@@ -11,6 +13,7 @@ export function FoodForm() {
         categoriaId: "",
         urlImg: "",
     });
+
     const [categories, setCategories] = useState<
         Array<{
             id: number;
@@ -56,19 +59,22 @@ export function FoodForm() {
         setError("");
 
         try {
-            const response = await fetch("/api/comidas", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    ...formData,
-                    categoriaId: Number(
-                        formData.categoriaId
-                    ),
-                    preco: formData.preco,
-                }),
-            });
+            const response = await fetch(
+                "http://localhost:3000/api/comidas",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        ...formData,
+                        categoriaId: Number(
+                            formData.categoriaId
+                        ),
+                        preco: formData.preco,
+                    }),
+                }
+            );
 
             if (!response.ok) {
                 throw new Error(
@@ -96,7 +102,7 @@ export function FoodForm() {
     };
 
     return (
-        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+        <div className="max-w-md w-full mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">
                 Add New Food Item
             </h2>
@@ -111,47 +117,24 @@ export function FoodForm() {
                 onSubmit={handleSubmit}
                 className="space-y-4"
             >
-                <div>
-                    <label
-                        htmlFor="titulo"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Food Name
-                    </label>
-                    <input
-                        type="text"
-                        id="titulo"
-                        name="titulo"
-                        value={formData.titulo}
-                        onChange={handleChange}
-                        required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                    />
-                </div>
+                <FormLabel
+                    label="Food Name"
+                    titulo="titulo"
+                    value={formData.titulo}
+                    handleChange={handleChange}
+                />
 
-                <div>
-                    <label
-                        htmlFor="preco"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Price
-                    </label>
-                    <input
-                        type="text"
-                        id="preco"
-                        name="preco"
-                        value={formData.preco}
-                        onChange={handleChange}
-                        required
-                        placeholder="e.g., 29.90"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                    />
-                </div>
+                <FormLabel
+                    label="Price"
+                    titulo="preco"
+                    value={formData.preco}
+                    handleChange={handleChange}
+                />
 
                 <div>
                     <label
                         htmlFor="categoriaId"
-                        className="block text-sm font-medium text-gray-700"
+                        className="block text-sm font-medium text-[var(--primary)]"
                     >
                         Category
                     </label>
@@ -161,7 +144,7 @@ export function FoodForm() {
                         value={formData.categoriaId}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
                     >
                         <option value="">
                             Select a category
@@ -177,32 +160,18 @@ export function FoodForm() {
                     </select>
                 </div>
 
-                <div>
-                    <label
-                        htmlFor="urlImg"
-                        className="block text-sm font-medium text-gray-700"
-                    >
-                        Image URL (optional)
-                    </label>
-                    <input
-                        type="url"
-                        id="urlImg"
-                        name="urlImg"
-                        value={formData.urlImg}
-                        onChange={handleChange}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
-                    />
-                </div>
+                <FormLabel
+                    label="Image URL (optional)"
+                    titulo="urlImg"
+                    type="url"
+                    value={formData.urlImg}
+                    handleChange={handleChange}
+                />
 
-                <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
-                >
-                    {isLoading
-                        ? "Adding..."
-                        : "Add Food Item"}
-                </button>
+                <FormSubmit
+                    isLoading={isLoading}
+                    text="Add Food Item"
+                />
             </form>
         </div>
     );
