@@ -54,3 +54,80 @@ export async function GET() {
         );
     }
 }
+
+export async function PUT(req: Request) {
+    try {
+        const {
+            titulo,
+            preco,
+            categoriaId,
+            urlImg,
+            comidaId,
+        } = await req.json();
+
+        if (
+            !titulo ||
+            !preco ||
+            !categoriaId ||
+            !comidaId
+        ) {
+            return NextResponse.json(
+                { error: "Campos obrigatórios faltando!" },
+                { status: 400 }
+            );
+        }
+
+        const comida = await prisma.comida.update({
+            where: {
+                id: comidaId,
+            },
+            data: {
+                titulo,
+                preco,
+                categoriaId,
+                urlImg,
+            },
+        });
+
+        return NextResponse.json(comida, { status: 200 });
+    } catch (err) {
+        return NextResponse.json(
+            {
+                error:
+                    "Falha ao fazer update em comida: " +
+                    err,
+            },
+            { status: 500 }
+        );
+    }
+}
+
+export async function DELETE(req: Request) {
+    try {
+        const { comidaId } = await req.json();
+
+        if (!comidaId) {
+            return NextResponse.json(
+                { error: "Campos obrigatórios faltando!" },
+                { status: 400 }
+            );
+        }
+
+        const comida = await prisma.comida.deleteMany({
+            where: {
+                id: comidaId,
+            },
+        });
+
+        return NextResponse.json(comida, { status: 200 });
+    } catch (err) {
+        return NextResponse.json(
+            {
+                error: "Falha ao deletar comida" + err,
+            },
+            {
+                status: 500,
+            }
+        );
+    }
+}
