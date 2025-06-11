@@ -11,22 +11,22 @@ export function middleware(request: NextRequest) {
         );
     }
 
-    if (request.method === "POST") {
-        const allowedOrigin = "http://localhost:3000";
-        const origin = request.headers.get("origin");
+    // if (request.method === "POST") {
+    //     const allowedOrigin = "http://localhost:3000";
+    //     const origin = request.headers.get("origin");
 
-        if (origin === allowedOrigin) {
-            response.headers.set(
-                "Access-Control-Allow-Origin",
-                origin
-            );
-        } else {
-            return new NextResponse(
-                "Acesso não permitido",
-                { status: 403 }
-            );
-        }
-    }
+    //     if (origin === allowedOrigin) {
+    //         response.headers.set(
+    //             "Access-Control-Allow-Origin",
+    //             origin
+    //         );
+    //     } else {
+    //         return new NextResponse(
+    //             "Acesso não permitido",
+    //             { status: 403 }
+    //         );
+    //     }
+    // }
 
     response.headers.set(
         "Access-Control-Allow-Methods",

@@ -3,8 +3,18 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const { titulo, preco, categoriaId, urlImg } =
+        const { titulo, preco, categoriaId, urlImg, all } =
             await req.json();
+
+        if (all) {
+            const data = await prisma.comida.findMany({
+                include: {
+                    categoria: true,
+                },
+            });
+
+            return Response.json(data);
+        }
 
         if (!titulo || !preco || !categoriaId) {
             return NextResponse.json(
@@ -48,7 +58,7 @@ export async function GET() {
     } catch (err) {
         return NextResponse.json(
             {
-                error: "Falha ao criar comida: " + err,
+                error: "Falha ao retornar comida: " + err,
             },
             { status: 500 }
         );
