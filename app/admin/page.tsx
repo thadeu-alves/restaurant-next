@@ -6,7 +6,13 @@ export default function page() {
     return (
         <div className="flex flex-col gap-8 items-center px-4 py-6">
             <FoodTable />
-            <FoodForm />
+            <FoodForm
+                categoriaId=""
+                preco=""
+                titulo=""
+                urlImg=""
+                isUpdate={false}
+            />
             <CategorieForm />
         </div>
     );

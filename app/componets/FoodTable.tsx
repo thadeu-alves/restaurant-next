@@ -74,7 +74,7 @@ export function FoodTable() {
                 <tbody>
                     {loading ? (
                         <tr>
-                            <h1>Carregando...</h1>
+                            <th>Carregando...</th>
                         </tr>
                     ) : (
                         comidas?.map((com) => {
@@ -86,6 +86,7 @@ export function FoodTable() {
                                         com.categoria
                                             ?.nome || ""
                                     }
+                                    id={com.id}
                                     key={com.id}
                                 />
                             );

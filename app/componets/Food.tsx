@@ -1,8 +1,10 @@
 import Image from "next/image";
 
-interface FoodProps {
+export interface FoodProps {
     titulo: string;
     preco: string;
+    categoriaId: string;
+    urlImg: string;
 }
 
 export function Food({ titulo, preco }: FoodProps) {

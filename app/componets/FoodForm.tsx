@@ -1,17 +1,33 @@
 "use client";
 
+export interface FormProps {
+    titulo: string;
+    preco: string;
+    categoriaId: string;
+    urlImg: string;
+    isUpdate: boolean;
+    id?: number;
+}
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FormLabel } from "./ui/FormLabel";
 import { FormSubmit } from "./ui/FormSubmit";
 
-export function FoodForm() {
+export function FoodForm({
+    titulo,
+    preco,
+    categoriaId,
+    urlImg,
+    isUpdate,
+    id,
+}: FormProps) {
     const router = useRouter();
     const [formData, setFormData] = useState({
-        titulo: "",
-        preco: "",
-        categoriaId: "",
-        urlImg: "",
+        titulo,
+        preco,
+        categoriaId,
+        urlImg,
     });
 
     const [categories, setCategories] = useState<
@@ -59,22 +75,42 @@ export function FoodForm() {
         setError("");
 
         try {
-            const response = await fetch(
-                "http://localhost:3000/api/comidas",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        ...formData,
-                        categoriaId: Number(
-                            formData.categoriaId
-                        ),
-                        preco: formData.preco,
-                    }),
-                }
-            );
+            const response = isUpdate
+                ? await fetch(
+                      "http://localhost:3000/api/comidas",
+                      {
+                          method: "PUT",
+                          headers: {
+                              "Content-Type":
+                                  "application/json",
+                          },
+                          body: JSON.stringify({
+                              ...formData,
+                              categoriaId: Number(
+                                  formData.categoriaId
+                              ),
+                              preco: formData.preco,
+                              comidaId: Number(id),
+                          }),
+                      }
+                  )
+                : await fetch(
+                      "http://localhost:3000/api/comidas",
+                      {
+                          method: "POST",
+                          headers: {
+                              "Content-Type":
+                                  "application/json",
+                          },
+                          body: JSON.stringify({
+                              ...formData,
+                              categoriaId: Number(
+                                  formData.categoriaId
+                              ),
+                              preco: formData.preco,
+                          }),
+                      }
+                  );
 
             if (!response.ok) {
                 throw new Error(
@@ -89,6 +125,7 @@ export function FoodForm() {
                 urlImg: "",
             });
 
+            if (isUpdate) router.back();
             router.refresh();
         } catch (err) {
             setError(
