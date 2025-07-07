@@ -43,12 +43,12 @@ export function FoodList() {
                 return (
                     <div
                         key={cat.id}
-                        className="space-y-6 mb-6"
+                        className="space-y-6 mb-6 container mx-auto"
                     >
-                        <h1 className="text-center text-amber-400 text-lg">
+                        <h1 className="text-center text-primary text-lg uppercase">
                             {cat.nome}
                         </h1>
-                        <ul className="space-y-4">
+                        <ul className="space-y-4 grid grid-cols-3 grid-rows-1fr gap-4 lg:grid-cols-4">
                             {cat.comidas?.map(
                                 ({ id, preco, titulo }) => {
                                     return (

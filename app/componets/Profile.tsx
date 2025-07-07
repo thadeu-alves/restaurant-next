@@ -3,7 +3,7 @@ import { ButtonLink } from "./ui/ButtonLink";
 
 export function Profile() {
     return (
-        <div className="py-6 px-4 space-y-8 border-b-2 border-[var(--primary)]">
+        <div className="py-6 px-4 space-y-8 border-b-2 border-[var(--primary)] container mx-auto">
             <div className="flex gap-4 items-center px-6">
                 <Image
                     alt="back icon"
