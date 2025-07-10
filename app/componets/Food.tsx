@@ -1,4 +1,7 @@
+"use client";
+import { storageFoods } from "@/lib/storage";
 import Image from "next/image";
+import { useState } from "react";
 
 export interface FoodProps {
     titulo: string;
@@ -7,7 +10,27 @@ export interface FoodProps {
     urlImg: string;
 }
 
-export function Food({ titulo, preco }: FoodProps) {
+export function Food({
+    titulo,
+    preco,
+    categoriaId,
+    urlImg,
+}: FoodProps) {
+    const [loading, setLoading] = useState(false);
+
+    function handleAdd() {
+        setLoading(true);
+        storageFoods.add({
+            titulo,
+            preco,
+            categoriaId,
+            urlImg,
+        });
+        setTimeout(() => {
+            setLoading(false);
+        }, 1220);
+    }
+
     return (
         <li className="space-y-4 p-4 w-full h-full rounded-2xl overflow-hidden shadow-lg flex flex-col border border-gray-200">
             <Image
@@ -25,6 +48,17 @@ export function Food({ titulo, preco }: FoodProps) {
                     R$
                     {preco}
                 </h2>
+                <button
+                    onClick={handleAdd}
+                    className={`text-white rounded-lg mt-4 ${
+                        loading
+                            ? "bg-amber-900"
+                            : "bg-primary"
+                    }`}
+                    disabled={loading}
+                >
+                    {loading ? "Adding..." : "Add"}
+                </button>
             </div>
         </li>
     );
