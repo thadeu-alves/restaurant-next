@@ -15,7 +15,9 @@ export function Food({
     preco,
     categoriaId,
     urlImg,
-}: FoodProps) {
+    showButton = true,
+    quantity = 1,
+}: FoodProps & { showButton: boolean; quantity: number }) {
     const [loading, setLoading] = useState(false);
 
     function handleAdd() {
@@ -32,7 +34,7 @@ export function Food({
     }
 
     return (
-        <li className="space-y-4 p-4 w-full h-full rounded-2xl overflow-hidden shadow-lg flex flex-col border border-gray-200">
+        <li className="space-y-4 p-4 w-full h-full rounded-2xl overflow-hidden shadow-lg flex flex-col border border-gray-200 relative">
             <Image
                 alt="back icon"
                 src="/food.png"
@@ -48,17 +50,26 @@ export function Food({
                     R$
                     {preco}
                 </h2>
-                <button
-                    onClick={handleAdd}
-                    className={`text-white rounded-lg mt-4 ${
-                        loading
-                            ? "bg-amber-900"
-                            : "bg-primary"
-                    }`}
-                    disabled={loading}
-                >
-                    {loading ? "Adding..." : "Add"}
-                </button>
+                {showButton && (
+                    <button
+                        onClick={handleAdd}
+                        className={`text-white mt-2 py-1 rounded-xl px-2 ${
+                            loading
+                                ? "bg-amber-900"
+                                : "bg-primary"
+                        }`}
+                        disabled={loading}
+                    >
+                        <span className="">
+                            {loading ? "Adding..." : "Add"}
+                        </span>
+                    </button>
+                )}
+                {quantity > 1 && (
+                    <h1 className="absolute top-0 right-0 m-4 text-xl">
+                        x{quantity}
+                    </h1>
+                )}
             </div>
         </li>
     );

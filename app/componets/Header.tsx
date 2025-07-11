@@ -16,6 +16,10 @@ export function Header() {
             href: "/cardapio",
             title: "Special Menu",
         },
+        {
+            href: "/lista",
+            title: "Foods List",
+        },
     ];
 
     useEffect(() => {

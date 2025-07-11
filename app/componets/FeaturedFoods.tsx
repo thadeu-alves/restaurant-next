@@ -61,6 +61,7 @@ export function FeaturedFoods() {
                             preco={food.preco}
                             urlImg=""
                             key={foods.indexOf(food)}
+                            showButton
                         />
                     );
                 })}
