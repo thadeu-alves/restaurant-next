@@ -5,7 +5,6 @@ import { FoodTable } from "../componets/FoodTable";
 export default function page() {
     return (
         <div className="flex flex-col gap-8 items-center px-4 py-6">
-            <FoodTable />
             <FoodForm
                 categoriaId=""
                 preco=""
@@ -14,6 +13,7 @@ export default function page() {
                 isUpdate={false}
             />
             <CategorieForm />
+            <FoodTable />
         </div>
     );
 }
