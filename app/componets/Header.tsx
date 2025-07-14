@@ -71,7 +71,7 @@ export function Header() {
                                 href={link.href}
                                 key={link.title}
                             >
-                                <li className="font-medium text-md">
+                                <li className="font-medium text-md text-secondary">
                                     {link.title}
                                 </li>
                             </a>
@@ -104,7 +104,7 @@ export function Header() {
                                         key={link.title}
                                     >
                                         <li
-                                            className={`font-medium text-2xl text-[var(--secondary)]`}
+                                            className={`font-medium text-2xl text-secondary`}
                                         >
                                             {link.title}
                                         </li>

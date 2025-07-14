@@ -8,18 +8,19 @@ export function PageHeader({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 cursor-pointer">
             <button
                 onClick={() => {
                     window.history.back();
                 }}
-                className="rounded-full border-2 border-black"
+                className="rounded-full border-3 border-black"
             >
                 <Image
                     alt="back icon"
                     src="/back.svg"
                     width={30}
                     height={30}
+                    className="cursor-pointer"
                 />
             </button>
             <h1 className="font-semibold text-xl">

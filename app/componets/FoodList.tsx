@@ -56,6 +56,10 @@ export function FoodList() {
                                             preco={preco}
                                             titulo={titulo}
                                             key={id}
+                                            quantity={1}
+                                            categoriaId=""
+                                            urlImg=""
+                                            showButton
                                         />
                                     );
                                 }

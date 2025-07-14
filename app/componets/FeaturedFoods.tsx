@@ -48,7 +48,7 @@ export function FeaturedFoods() {
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 container mx-auto py-8">
             <h1 className="text-center text-primary text-xl font-bold uppercase">
                 Featured Foods
             </h1>
@@ -62,6 +62,7 @@ export function FeaturedFoods() {
                             urlImg=""
                             key={foods.indexOf(food)}
                             showButton
+                            quantity={1}
                         />
                     );
                 })}
