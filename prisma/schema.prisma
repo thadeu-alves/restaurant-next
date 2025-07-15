@@ -22,8 +22,11 @@ model Comida {
   categoriaId Int
 }
 
-model Evento {
-  id    Int     @id @default(autoincrement())
-  data  DateTime  
-  descricao String?  
+
+model Transaction {
+  id          Int      @id @default(autoincrement())
+  amount      Float    @default(0.0)
+  type        String   // "INCOME" or "EXPENSE"
+  description String?  // Optional field for notes (e.g., "Food sales", "Rent")
+  createdAt   DateTime @default(now())
 }

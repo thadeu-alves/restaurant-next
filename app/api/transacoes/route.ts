@@ -3,28 +3,30 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const { titulo } = await req.json();
+        const { amount, type, desc } = await req.json();
 
-        if (!titulo) {
+        if (!amount || !type) {
             return NextResponse.json(
                 { error: "Campos obrigatórios faltando!" },
                 { status: 400 }
             );
         }
 
-        const categoria = await prisma.categoria.create({
+        const data = await prisma.transaction.create({
             data: {
-                nome: titulo,
+                amount,
+                type,
+                description: desc,
             },
         });
 
-        return NextResponse.json(categoria, {
+        return NextResponse.json(data, {
             status: 201,
         });
     } catch (err) {
         return NextResponse.json(
             {
-                error: "Falha ao criar comida: " + err,
+                error: "Falha ao criar transação: " + err,
             },
             { status: 500 }
         );
@@ -33,13 +35,13 @@ export async function POST(req: Request) {
 
 export async function GET() {
     try {
-        const data = await prisma.categoria.findMany({});
+        const data = await prisma.transaction.findMany({});
 
         return NextResponse.json(data);
     } catch (err) {
         return NextResponse.json(
             {
-                error: "Falha ao pegar categoria: " + err,
+                error: "Falha ao pegar transações: " + err,
             },
             { status: 500 }
         );
@@ -48,33 +50,34 @@ export async function GET() {
 
 export async function PUT(req: Request) {
     try {
-        const { categoriaId, titulo } = await req.json();
+        const { amount, type, desc, id } = await req.json();
 
-        if (!categoriaId && !titulo) {
+        if (!amount || !type || !id) {
             return NextResponse.json(
                 { error: "Campos obrigatórios faltando!" },
                 { status: 400 }
             );
         }
 
-        const categoria = await prisma.categoria.update({
+        const data = await prisma.transaction.update({
             where: {
-                id: categoriaId,
+                id,
             },
             data: {
-                nome: titulo,
+                amount,
+                type,
+                description: desc,
             },
         });
 
-        return NextResponse.json(categoria, {
-            status: 200,
+        return NextResponse.json(data, {
+            status: 201,
         });
     } catch (err) {
         return NextResponse.json(
             {
                 error:
-                    "Falha ao tentar atualizar categoria: " +
-                    err,
+                    "Falha ao atualizar transação: " + err,
             },
             {
                 status: 500,
@@ -85,50 +88,26 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
     try {
-        const { categoriaId } = await req.json();
+        const { id } = await req.json();
 
-        if (!categoriaId) {
+        if (!id) {
             return NextResponse.json(
                 { error: "Campos obrigatórios faltando!" },
                 { status: 400 }
             );
         }
 
-        const categoria = await prisma.categoria.findMany({
+        const data = await prisma.transaction.deleteMany({
             where: {
-                id: categoriaId,
-            },
-            include: {
-                comidas: true,
+                id,
             },
         });
 
-        console.log(categoria[0].comidas);
-
-        if (categoria[0].comidas.length > 0) {
-            return NextResponse.json(
-                {
-                    error: "Só é possivel deletar uma categoria vazia!",
-                },
-                { status: 400 }
-            );
-        }
-
-        await prisma.categoria.deleteMany({
-            where: {
-                id: categoriaId,
-            },
-        });
-
-        return NextResponse.json(categoria, {
-            status: 200,
-        });
+        return NextResponse.json(data, { status: 200 });
     } catch (err) {
         return NextResponse.json(
             {
-                error:
-                    "Falha ao tentar deletar categoria: " +
-                    err,
+                error: "Falha ao deletar transação: " + err,
             },
             {
                 status: 500,
