@@ -1,6 +1,6 @@
 "use client";
 
-import { FoodProps } from "@/app/componets/Food";
+import { FoodProps } from "@/app/componets/ui/Food";
 import { FoodForm } from "@/app/componets/FoodForm";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";

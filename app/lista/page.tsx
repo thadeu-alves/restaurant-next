@@ -1,9 +1,11 @@
 "use client";
 import { storageFoods } from "@/lib/storage";
-import { Food, FoodProps } from "../componets/Food";
+import { Food, FoodProps } from "../componets/ui/Food";
 import { ButtonLink } from "../componets/ui/ButtonLink";
-import { PageHeader } from "../componets/PageHeader";
+import { PageBackButton } from "../componets/ui/PageBackButton";
 import Link from "next/link";
+import { PageTitle } from "../componets/ui/PageTitle";
+import { FoodList } from "../componets/ui/FoodList";
 
 interface FoodWithQuantity extends FoodProps {
     quantidade: number;
@@ -43,14 +45,20 @@ export default function page() {
     const foodsFinal = quantityFoods(foods);
 
     return (
-        <div className="py-8 space-y-4 container mx-auto">
-            <PageHeader>Back</PageHeader>
-            <h1 className="text-center text-primary text-xl font-bold uppercase">
-                Your Foods List
-            </h1>
-            {foodsFinal.length > 0 ? (
+        <div className="p-12 space-y-8 container mx-auto">
+            <PageBackButton>Back</PageBackButton>
+            <div className="text-center space-y-4">
+                <PageTitle.Title invert={false}>
+                    Your Card
+                </PageTitle.Title>
+                <PageTitle.Sub invert={false}>
+                    Lorem Ipsum is simply dummy text of the
+                    printing and typesetting industry.
+                </PageTitle.Sub>
+            </div>
+            {foodsFinal?.length > 0 ? (
                 <>
-                    <ul className="space-y-4 grid grid-cols-3 grid-rows-1fr gap-4 px-4">
+                    <FoodList>
                         {foodsFinal.map((food) => {
                             return (
                                 <Food
@@ -68,7 +76,7 @@ export default function page() {
                                 />
                             );
                         })}
-                    </ul>
+                    </FoodList>
                     <div className="max-w-80 mx-auto mt-6">
                         <ButtonLink color="bg-green-500">
                             DELIVERY NOW

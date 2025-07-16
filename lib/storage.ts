@@ -1,4 +1,4 @@
-import { FoodProps } from "@/app/componets/Food";
+import { FoodProps } from "@/app/componets/ui/Food";
 
 export const storageFoods = {
     get(): FoodProps[] {

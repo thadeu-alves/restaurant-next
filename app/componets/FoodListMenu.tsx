@@ -2,9 +2,10 @@
 
 import { Categoria } from "@/types";
 import { useEffect, useState } from "react";
-import { Food } from "./Food";
+import { Food } from "./ui/Food";
+import { FoodList } from "./ui/FoodList";
 
-export function FoodList() {
+export function FoodListMenu() {
     const [categorias, setCategorias] = useState<
         Categoria[]
     >([]);
@@ -39,7 +40,7 @@ export function FoodList() {
 
     return (
         <div>
-            {categorias.map((cat) => {
+            {categorias?.map((cat) => {
                 return (
                     <div
                         key={cat.id}
@@ -48,7 +49,7 @@ export function FoodList() {
                         <h1 className="text-center text-primary text-lg uppercase">
                             {cat.nome}
                         </h1>
-                        <ul className="space-y-4 grid grid-cols-3 grid-rows-1fr gap-4 lg:grid-cols-4">
+                        <FoodList>
                             {cat.comidas?.map(
                                 ({ id, preco, titulo }) => {
                                     return (
@@ -64,7 +65,7 @@ export function FoodList() {
                                     );
                                 }
                             )}
-                        </ul>
+                        </FoodList>
                     </div>
                 );
             })}

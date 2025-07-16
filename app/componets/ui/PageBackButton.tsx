@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-export function PageHeader({
+export function PageBackButton({
     children,
 }: Readonly<{
     children: React.ReactNode;
@@ -13,7 +13,7 @@ export function PageHeader({
                 onClick={() => {
                     window.history.back();
                 }}
-                className="rounded-full border-3 border-black"
+                className="rounded-full border-3 border-[var(--primary)]"
             >
                 <Image
                     alt="back icon"
@@ -23,7 +23,7 @@ export function PageHeader({
                     className="cursor-pointer"
                 />
             </button>
-            <h1 className="font-semibold text-xl">
+            <h1 className="font-medium text-xl text-primary ">
                 {children}
             </h1>
         </div>

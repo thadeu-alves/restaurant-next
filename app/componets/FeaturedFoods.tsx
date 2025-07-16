@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Food, FoodProps } from "./Food";
+import { Food, FoodProps } from "./ui/Food";
 import { Categoria } from "@/types";
+import { FoodList } from "./ui/FoodList";
+import { PageTitle } from "./ui/PageTitle";
 
 export function FeaturedFoods() {
     const [foods, setFoods] = useState<FoodProps[]>();
@@ -48,11 +50,17 @@ export function FeaturedFoods() {
     }
 
     return (
-        <div className="space-y-6 container mx-auto py-8">
-            <h1 className="text-center text-primary text-xl font-bold uppercase">
-                Featured Foods
-            </h1>
-            <ul className="space-y-4 grid grid-cols-3 grid-rows-1fr gap-4 px-4 lg:grid-cols-4">
+        <div className="p-12 space-y-6 container mx-auto lg:space-y-12">
+            <div className="space-y-2 text-center lg:space-y-4">
+                <PageTitle.Title invert={false}>
+                    FeaturedFoods
+                </PageTitle.Title>
+                <PageTitle.Sub invert={false}>
+                    Lorem Ipsum is simply dummy text of the
+                    printing and typesetting industry.
+                </PageTitle.Sub>
+            </div>
+            <FoodList>
                 {foods?.map((food) => {
                     return (
                         <Food
@@ -66,7 +74,7 @@ export function FeaturedFoods() {
                         />
                     );
                 })}
-            </ul>
+            </FoodList>
         </div>
     );
 }

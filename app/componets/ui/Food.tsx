@@ -19,6 +19,7 @@ export function Food({
     quantity = 1,
 }: FoodProps & { showButton: boolean; quantity: number }) {
     const [loading, setLoading] = useState(false);
+    const [carded, setCarded] = useState(false);
 
     function handleAdd() {
         setLoading(true);
@@ -30,19 +31,20 @@ export function Food({
         });
         setTimeout(() => {
             setLoading(false);
+            setCarded(true);
         }, 1220);
     }
 
     return (
-        <li className="space-y-4 p-4 w-full h-full rounded-2xl overflow-hidden shadow-lg flex flex-col border border-gray-200 relative">
+        <li className="bg-primary text-white p-4 w-full h-full flex justify-between gap-2 rounded-2xl shadow-xl relative">
             <Image
                 alt="back icon"
                 src="/food.png"
                 width={100}
                 height={100}
-                className="object-cover w-30 h-30 rounded-full"
+                className="object-cover w-30 h-30 rounded-full my-auto"
             />
-            <div className="flex flex-1 flex-col justify-between">
+            <div className="flex-1 text-center flex flex-col justify-center space-y-2">
                 <h1 className="font-semibold text-xl">
                     {titulo}
                 </h1>
@@ -53,15 +55,19 @@ export function Food({
                 {showButton && (
                     <button
                         onClick={handleAdd}
-                        className={`text-white mt-2 py-1 rounded-xl px-2 ${
+                        className={`text-primary font-medium py-1 rounded-2xl px-2 w-full max-w-40 mx-auto ${
                             loading
-                                ? "bg-amber-900"
-                                : "bg-primary"
+                                ? "bg-gray-300"
+                                : "bg-white"
                         }`}
                         disabled={loading}
                     >
                         <span className="">
-                            {loading ? "Adding..." : "Add"}
+                            {loading
+                                ? "Adding..."
+                                : carded
+                                ? "Into your Card!!"
+                                : "Add to Card"}
                         </span>
                     </button>
                 )}

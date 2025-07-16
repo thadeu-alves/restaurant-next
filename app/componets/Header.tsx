@@ -14,7 +14,7 @@ export function Header() {
         },
         {
             href: "/cardapio",
-            title: "Special Menu",
+            title: "Menu",
         },
         {
             href: "/lista",
@@ -42,13 +42,13 @@ export function Header() {
     return (
         <div className={`bg-primary`}>
             <nav
-                className={`flex justify-between bg-primary px-6 py-3  max-w-[1020px] mx-auto`}
+                className={`flex justify-between bg-primary px-12 py-3  container mx-auto lg:py-4`}
             >
                 <Link href="/">
                     <h1
-                        className={`text-2xl font-medium text-[var(--secondary)]`}
+                        className={`text-4xl font-black text-[var(--secondary)]`}
                     >
-                        Logo
+                        LOGO
                     </h1>
                 </Link>
                 <button
