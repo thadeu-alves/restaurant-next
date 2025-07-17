@@ -25,7 +25,7 @@ export function FoodTableRow({
             <td className="px-6 py-4">R${price}</td>
             <td className="px-6 py-4 text-right">
                 <Link
-                    href={`/admin/${id}`}
+                    href={`/admin/comidas/${id}`}
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 >
                     Edit

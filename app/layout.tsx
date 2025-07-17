@@ -1,12 +1,9 @@
-import type { Metadata } from "next";
+"use client";
 import "./globals.css";
 import { Header } from "./componets/Header";
 import { Inter } from "next/font/google";
-
-export const metadata: Metadata = {
-    title: "Restaurant",
-    description: "Developed by Thadeu Alves",
-};
+import { usePathname } from "next/navigation";
+import { AdminHeader } from "./componets/AdminHeader";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -17,8 +14,28 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const pathname = usePathname();
+
+    if (pathname.includes("/admin")) {
+        console.log("Rendering AdminLayout");
+        return (
+            <html lang="en" className={inter.className}>
+                <head>
+                    <title>Admin Page</title>
+                </head>
+                <body className="antialiased min-h-screen flex max-h-screen overflow-hidden">
+                    <AdminHeader />
+                    {children}
+                </body>
+            </html>
+        );
+    }
+
     return (
         <html lang="en" className={inter.className}>
+            <head>
+                <title>Restaurant</title>
+            </head>
             <body
                 className={`antialiased min-h-screen flex flex-col `}
             >
