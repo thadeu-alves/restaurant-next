@@ -61,7 +61,7 @@ export function FeaturedFoods() {
                 </PageTitle.Sub>
             </div>
             <FoodList>
-                {foods?.map((food) => {
+                {foods?.slice(0, 6).map((food) => {
                     return (
                         <Food
                             titulo={food.titulo}
