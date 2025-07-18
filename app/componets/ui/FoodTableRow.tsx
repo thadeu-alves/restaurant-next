@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Table } from "./Table";
 
 interface FoodTableRowProps {
     title: string;
@@ -14,10 +15,10 @@ export function FoodTableRow({
     id,
 }: FoodTableRowProps) {
     return (
-        <tr className="bg-white border-b  border-gray-200 hover:bg-gray-50">
+        <Table.BodyElement>
             <th
                 scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
             >
                 {title}
             </th>
@@ -31,6 +32,6 @@ export function FoodTableRow({
                     Edit
                 </Link>
             </td>
-        </tr>
+        </Table.BodyElement>
     );
 }

@@ -1,12 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FormLabel } from "./ui/FormLabel";
 import { FormSubmit } from "./ui/FormSubmit";
 
 export function CategorieForm() {
-    const router = useRouter();
     const [formData, setFormData] = useState({
         titulo: "",
     });
@@ -25,7 +23,8 @@ export function CategorieForm() {
         }));
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         setIsLoading(true);
         setError("");
 
@@ -52,8 +51,6 @@ export function CategorieForm() {
             setFormData({
                 titulo: "",
             });
-
-            router.refresh();
         } catch (err) {
             setError(
                 err instanceof Error
@@ -61,7 +58,10 @@ export function CategorieForm() {
                     : "An unknown error occurred"
             );
         } finally {
-            setIsLoading(false);
+            setTimeout(() => {
+                window.location.reload();
+                setIsLoading(false);
+            }, 500);
         }
     };
 

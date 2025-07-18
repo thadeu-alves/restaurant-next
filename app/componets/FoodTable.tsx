@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { FoodTableRow } from "./ui/FoodTableRow";
 import { Comida } from "@/types";
 import Image from "next/image";
+import { Table } from "./ui/Table";
 
 export function FoodTable() {
     const [comidas, setComidas] = useState<Comida[]>([]);
@@ -83,70 +84,52 @@ export function FoodTable() {
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 rounded-xl">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                <thead className="text-xs text-white uppercase bg-[var(--primary)]">
-                    <tr>
-                        <th
-                            scope="col"
-                            className="px-6 py-3 flex justify-center items-center gap-4 cursor-pointer"
-                            onClick={() =>
-                                handleSort("title")
+            <Table.Container>
+                <Table.Head>
+                    <Table.HeadElement
+                        onClick={() => handleSort("title")}
+                    >
+                        Product name{" "}
+                        <Image
+                            src="/ascdesc.svg"
+                            width={20}
+                            height={20}
+                            alt="asc or desc icon"
+                            className={
+                                sortDirection === "asc" &&
+                                sorted === "title"
+                                    ? ""
+                                    : "rotate-180"
                             }
-                        >
-                            Product name{" "}
-                            <Image
-                                src="/ascdesc.svg"
-                                width={20}
-                                height={20}
-                                alt="asc or desc icon"
-                                className={
-                                    sortDirection ===
-                                        "asc" &&
-                                    sorted === "title"
-                                        ? ""
-                                        : "rotate-180"
-                                }
-                            />
-                        </th>
-                        <th
-                            scope="col"
-                            className="px-6 py-3"
-                        >
-                            Category
-                        </th>
-                        <th
-                            scope="col"
-                            className="px-6 py-3 flex justify-center items-center gap-4 cursor-pointer"
-                            onClick={() =>
-                                handleSort("price")
+                        />
+                    </Table.HeadElement>
+                    <Table.HeadElement>
+                        Category
+                    </Table.HeadElement>
+                    <Table.HeadElement
+                        onClick={() => handleSort("price")}
+                    >
+                        Price
+                        <Image
+                            src="/ascdesc.svg"
+                            width={20}
+                            height={20}
+                            alt="asc or desc icon"
+                            className={
+                                sortDirection === "asc" &&
+                                sorted === "price"
+                                    ? ""
+                                    : "rotate-180"
                             }
-                        >
-                            Price
-                            <Image
-                                src="/ascdesc.svg"
-                                width={20}
-                                height={20}
-                                alt="asc or desc icon"
-                                className={
-                                    sortDirection ===
-                                        "asc" &&
-                                    sorted === "price"
-                                        ? ""
-                                        : "rotate-180"
-                                }
-                            />
-                        </th>
-                        <th
-                            scope="col"
-                            className="px-6 py-3"
-                        >
-                            <span className="sr-only">
-                                Edit
-                            </span>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+                        />
+                    </Table.HeadElement>
+                    <Table.HeadElement>
+                        <span className="sr-only">
+                            Edit
+                        </span>
+                    </Table.HeadElement>
+                </Table.Head>
+                <Table.Body>
                     {loading ? (
                         <tr>
                             <th>Carregando...</th>
@@ -168,8 +151,8 @@ export function FoodTable() {
                             );
                         })
                     )}
-                </tbody>
-            </table>
+                </Table.Body>
+            </Table.Container>
         </div>
     );
 }
