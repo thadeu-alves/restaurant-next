@@ -11,8 +11,7 @@ export interface FormProps {
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FormLabel } from "./ui/FormLabel";
-import { FormSubmit } from "./ui/FormSubmit";
+import { Form } from "./ui/Form";
 
 export function FoodForm({
     titulo,
@@ -126,7 +125,7 @@ export function FoodForm({
             });
 
             if (isUpdate) router.back();
-            router.refresh();
+            window.location.reload();
         } catch (err) {
             setError(
                 err instanceof Error
@@ -139,10 +138,8 @@ export function FoodForm({
     };
 
     return (
-        <div className="max-w-md w-full mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">
-                Add New Food Item
-            </h2>
+        <Form.Container>
+            <Form.Title>Add New Food Item</Form.Title>
 
             {error && (
                 <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
@@ -154,14 +151,14 @@ export function FoodForm({
                 onSubmit={handleSubmit}
                 className="space-y-4"
             >
-                <FormLabel
+                <Form.Label
                     label="Food Name"
                     titulo="titulo"
                     value={formData.titulo}
                     handleChange={handleChange}
                 />
 
-                <FormLabel
+                <Form.Label
                     label="Price"
                     titulo="preco"
                     value={formData.preco}
@@ -197,7 +194,7 @@ export function FoodForm({
                     </select>
                 </div>
 
-                <FormLabel
+                <Form.Label
                     label="Image URL (optional)"
                     titulo="urlImg"
                     type="url"
@@ -205,11 +202,11 @@ export function FoodForm({
                     handleChange={handleChange}
                 />
 
-                <FormSubmit
+                <Form.Submit
                     isLoading={isLoading}
                     text="Add Food Item"
                 />
             </form>
-        </div>
+        </Form.Container>
     );
 }
