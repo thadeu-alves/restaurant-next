@@ -14,9 +14,11 @@ function TableContainer({
     children: React.ReactNode;
 }) {
     return (
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-            {children}
-        </table>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 rounded-xl">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                {children}
+            </table>
+        </div>
     );
 }
 
@@ -51,8 +53,9 @@ function TableHeadElement({
         <th
             scope="col"
             className={`px-6 py-3 ${
-                onClick &&
-                "flex justify-center items-center gap-4 cursor-pointer"
+                onClick
+                    ? "flex justify-center items-center gap-4 cursor-pointer"
+                    : ""
             }`}
             onClick={onClick}
         >

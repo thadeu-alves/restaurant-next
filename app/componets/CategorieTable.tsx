@@ -59,62 +59,51 @@ export function CategorieTable() {
     }
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 rounded-xl">
-            <Table.Container>
-                <Table.Head>
-                    <Table.HeadElement>
-                        Title
-                    </Table.HeadElement>
-                    <Table.HeadElement>
-                        Foods Quantity
-                    </Table.HeadElement>
-                    <Table.HeadElement>
-                        <span className="sr-only">
-                            Delete
-                        </span>
-                    </Table.HeadElement>
-                </Table.Head>
-                <Table.Body>
-                    {loading ? (
-                        <tr>
-                            <th>Loading...</th>
-                        </tr>
-                    ) : (
-                        categories?.map((cat) => {
-                            return (
-                                <Table.BodyElement
-                                    key={cat.id}
+        <Table.Container>
+            <Table.Head>
+                <Table.HeadElement>Title</Table.HeadElement>
+                <Table.HeadElement>
+                    Foods Quantity
+                </Table.HeadElement>
+                <Table.HeadElement>
+                    <span className="sr-only">Delete</span>
+                </Table.HeadElement>
+            </Table.Head>
+            <Table.Body>
+                {loading ? (
+                    <tr>
+                        <th>Loading...</th>
+                    </tr>
+                ) : (
+                    categories?.map((cat) => {
+                        return (
+                            <Table.BodyElement key={cat.id}>
+                                <td
+                                    scope="row"
+                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                 >
-                                    <td
-                                        scope="row"
-                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                                    >
-                                        {cat.nome}
-                                    </td>
-                                    <td className="text-center">
-                                        {
-                                            cat.comidas
-                                                ?.length
+                                    {cat.nome}
+                                </td>
+                                <td className="text-center">
+                                    {cat.comidas?.length}
+                                </td>
+                                <td className="px-6 py-4 text-right">
+                                    <span
+                                        className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
+                                        onClick={() =>
+                                            handleDelete(
+                                                cat.id
+                                            )
                                         }
-                                    </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <span
-                                            className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
-                                            onClick={() =>
-                                                handleDelete(
-                                                    cat.id
-                                                )
-                                            }
-                                        >
-                                            Delete
-                                        </span>
-                                    </td>
-                                </Table.BodyElement>
-                            );
-                        })
-                    )}
-                </Table.Body>
-            </Table.Container>
-        </div>
+                                    >
+                                        Delete
+                                    </span>
+                                </td>
+                            </Table.BodyElement>
+                        );
+                    })
+                )}
+            </Table.Body>
+        </Table.Container>
     );
 }

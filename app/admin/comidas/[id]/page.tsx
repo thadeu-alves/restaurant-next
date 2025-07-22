@@ -66,7 +66,7 @@ export default function Page({ params }: PageProps) {
     }
 
     return (
-        <div className="py-8 space-y-8">
+        <div className="flex-1 p-12 space-y-8 my-auto">
             {data[0] && (
                 <FoodForm
                     categoriaId={data[0]?.categoriaId}

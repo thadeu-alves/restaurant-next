@@ -83,76 +83,72 @@ export function FoodTable() {
     }
 
     return (
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg border border-gray-200 rounded-xl">
-            <Table.Container>
-                <Table.Head>
-                    <Table.HeadElement
-                        onClick={() => handleSort("title")}
-                    >
-                        Product name{" "}
-                        <Image
-                            src="/ascdesc.svg"
-                            width={20}
-                            height={20}
-                            alt="asc or desc icon"
-                            className={
-                                sortDirection === "asc" &&
-                                sorted === "title"
-                                    ? ""
-                                    : "rotate-180"
-                            }
-                        />
-                    </Table.HeadElement>
-                    <Table.HeadElement>
-                        Category
-                    </Table.HeadElement>
-                    <Table.HeadElement
-                        onClick={() => handleSort("price")}
-                    >
-                        Price
-                        <Image
-                            src="/ascdesc.svg"
-                            width={20}
-                            height={20}
-                            alt="asc or desc icon"
-                            className={
-                                sortDirection === "asc" &&
-                                sorted === "price"
-                                    ? ""
-                                    : "rotate-180"
-                            }
-                        />
-                    </Table.HeadElement>
-                    <Table.HeadElement>
-                        <span className="sr-only">
-                            Edit
-                        </span>
-                    </Table.HeadElement>
-                </Table.Head>
-                <Table.Body>
-                    {loading ? (
-                        <tr>
-                            <th>Carregando...</th>
-                        </tr>
-                    ) : (
-                        filtered.length > 0 &&
-                        filtered?.map((com) => {
-                            return (
-                                <FoodTableRow
-                                    title={com.titulo}
-                                    price={com.preco}
-                                    category={
-                                        com.categoria
-                                            ?.nome || ""
-                                    }
-                                    id={com.id}
-                                    key={com.id}
-                                />
-                            );
-                        })
-                    )}
-                </Table.Body>
-            </Table.Container>
-        </div>
+        <Table.Container>
+            <Table.Head>
+                <Table.HeadElement
+                    onClick={() => handleSort("title")}
+                >
+                    Product name{" "}
+                    <Image
+                        src="/ascdesc.svg"
+                        width={20}
+                        height={20}
+                        alt="asc or desc icon"
+                        className={
+                            sortDirection === "asc" &&
+                            sorted === "title"
+                                ? ""
+                                : "rotate-180"
+                        }
+                    />
+                </Table.HeadElement>
+                <Table.HeadElement>
+                    Category
+                </Table.HeadElement>
+                <Table.HeadElement
+                    onClick={() => handleSort("price")}
+                >
+                    Price
+                    <Image
+                        src="/ascdesc.svg"
+                        width={20}
+                        height={20}
+                        alt="asc or desc icon"
+                        className={
+                            sortDirection === "asc" &&
+                            sorted === "price"
+                                ? ""
+                                : "rotate-180"
+                        }
+                    />
+                </Table.HeadElement>
+                <Table.HeadElement>
+                    <span className="sr-only">Edit</span>
+                </Table.HeadElement>
+            </Table.Head>
+            <Table.Body>
+                {loading ? (
+                    <tr>
+                        <th>Carregando...</th>
+                    </tr>
+                ) : (
+                    filtered.length > 0 &&
+                    filtered?.map((com) => {
+                        return (
+                            <FoodTableRow
+                                title={com.titulo}
+                                price={com.preco}
+                                category={
+                                    com.categoria?.nome ||
+                                    ""
+                                }
+                                id={com.id}
+                                key={com.id}
+                            />
+                        );
+                    })
+                )}
+            </Table.Body>
+        </Table.Container>
     );
 }

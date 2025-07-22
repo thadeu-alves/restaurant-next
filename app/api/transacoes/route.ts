@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const { amount, type, desc } = await req.json();
+        const { amount, type, description } =
+            await req.json();
 
         if (!amount || !type) {
             return NextResponse.json(
@@ -16,7 +17,7 @@ export async function POST(req: Request) {
             data: {
                 amount,
                 type,
-                description: desc,
+                description,
             },
         });
 
@@ -50,7 +51,8 @@ export async function GET() {
 
 export async function PUT(req: Request) {
     try {
-        const { amount, type, desc, id } = await req.json();
+        const { amount, type, description, id } =
+            await req.json();
 
         if (!amount || !type || !id) {
             return NextResponse.json(
@@ -66,7 +68,7 @@ export async function PUT(req: Request) {
             data: {
                 amount,
                 type,
-                description: desc,
+                description,
             },
         });
 

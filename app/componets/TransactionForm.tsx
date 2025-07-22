@@ -58,8 +58,6 @@ export function TransactionForm() {
                 type: "",
                 description: "",
             });
-
-            window.location.reload();
         } catch (err) {
             setError(
                 err instanceof Error
@@ -67,7 +65,10 @@ export function TransactionForm() {
                     : "An unknown error occurred"
             );
         } finally {
-            setIsLoading(false);
+            setTimeout(() => {
+                window.location.reload();
+                setIsLoading(false);
+            }, 500);
         }
     };
 
