@@ -11,9 +11,9 @@ export function CategorieTable() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        try {
-            setLoading(true);
-            async function fetchData() {
+        async function fetchData() {
+            try {
+                setLoading(true);
                 const data = await fetch(
                     "http://localhost:3000/api/comidas"
                 );
@@ -22,14 +22,13 @@ export function CategorieTable() {
                 console.log(res);
 
                 setCategories(res);
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setLoading(false);
             }
-
-            fetchData();
-        } catch (err) {
-            console.log(err);
-        } finally {
-            setLoading(false);
         }
+        fetchData();
     }, []);
 
     async function handleDelete(id: number) {

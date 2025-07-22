@@ -11,19 +11,7 @@ export function CategorieForm() {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = (
-        e: React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement
-        >
-    ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setIsLoading(true);
         setError("");
@@ -63,7 +51,19 @@ export function CategorieForm() {
                 setIsLoading(false);
             }, 500);
         }
-    };
+    }
+
+    function handleChange(
+        e: React.ChangeEvent<
+            HTMLInputElement | HTMLSelectElement
+        >
+    ) {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    }
 
     return (
         <div className="max-w-md w-full mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow-md">

@@ -9,7 +9,7 @@ export function TransactionTable() {
     const [transactions, setTransactions] = useState<
         Transaction[]
     >([]);
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [filtered, setFiltered] = useState<Transaction[]>(
         []
     );
@@ -21,21 +21,21 @@ export function TransactionTable() {
     >(null);
 
     useEffect(() => {
-        setLoading(true);
-        try {
-            async function fetchData() {
+        setIsLoading(true);
+        async function fetchData() {
+            try {
                 const data = await fetch(
                     "http://localhost:3000/api/transacoes"
                 );
                 const res = await data.json();
                 setTransactions(res);
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setIsLoading(false);
             }
-            fetchData();
-        } catch (err) {
-            console.log(err);
-        } finally {
-            setLoading(false);
         }
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -59,7 +59,7 @@ export function TransactionTable() {
     }, [sortDirection, sorted, transactions]);
 
     async function handleDelete(id: number) {
-        setLoading(true);
+        setIsLoading(true);
         try {
             const res = await fetch(
                 "http://localhost:3000/api/transacoes",
@@ -79,7 +79,7 @@ export function TransactionTable() {
         } catch (err) {
             console.log(err);
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     }
 

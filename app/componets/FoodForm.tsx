@@ -39,7 +39,7 @@ export function FoodForm({
     const [error, setError] = useState("");
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        async function fetchCategories() {
             try {
                 const response = await fetch(
                     "http://localhost:3000/api/categorias",
@@ -52,23 +52,11 @@ export function FoodForm({
             } catch (err) {
                 setError("Failed to load categories" + err);
             }
-        };
+        }
         fetchCategories();
     }, []);
 
-    const handleChange = (
-        e: React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement
-        >
-    ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setIsLoading(true);
         setError("");
@@ -135,7 +123,19 @@ export function FoodForm({
         } finally {
             setIsLoading(false);
         }
-    };
+    }
+
+    function handleChange(
+        e: React.ChangeEvent<
+            HTMLInputElement | HTMLSelectElement
+        >
+    ) {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    }
 
     return (
         <Form.Container>

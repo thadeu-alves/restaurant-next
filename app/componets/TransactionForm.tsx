@@ -18,19 +18,7 @@ export function TransactionForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
-    const handleChange = (
-        e: React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement
-        >
-    ) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
+    async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         try {
             const response = await fetch(
@@ -70,7 +58,19 @@ export function TransactionForm() {
                 setIsLoading(false);
             }, 500);
         }
-    };
+    }
+
+    function handleChange(
+        e: React.ChangeEvent<
+            HTMLInputElement | HTMLSelectElement
+        >
+    ) {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    }
 
     return (
         <Form.Container>
