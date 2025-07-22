@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FormLabel } from "./ui/FormLabel";
 import { FormSubmit } from "./ui/FormSubmit";
+import { connection } from "@/lib/connection";
 
 export function CategorieForm() {
     const [formData, setFormData] = useState({
@@ -17,20 +18,14 @@ export function CategorieForm() {
         setError("");
 
         try {
-            const response = await fetch(
-                "http://localhost:3000/api/categorias",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        ...formData,
-                    }),
-                }
+            const res = await connection.post(
+                "/categorias",
+                JSON.stringify({
+                    ...formData,
+                })
             );
 
-            if (!response.ok) {
+            if (!res.ok) {
                 throw new Error(
                     "Failed to create categorie item"
                 );

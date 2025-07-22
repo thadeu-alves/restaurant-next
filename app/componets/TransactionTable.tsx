@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Table } from "./ui/Table";
 import { Transaction } from "@prisma/client";
 import Image from "next/image";
+import { connection } from "@/lib/connection";
 
 export function TransactionTable() {
     const [transactions, setTransactions] = useState<
@@ -24,11 +25,11 @@ export function TransactionTable() {
         setIsLoading(true);
         async function fetchData() {
             try {
-                const data = await fetch(
-                    "http://localhost:3000/api/transacoes"
+                const res = await connection.get(
+                    "/transacoes"
                 );
-                const res = await data.json();
-                setTransactions(res);
+                const data = await res.json();
+                setTransactions(data);
             } catch (err) {
                 console.log(err);
             } finally {
@@ -61,15 +62,9 @@ export function TransactionTable() {
     async function handleDelete(id: number) {
         setIsLoading(true);
         try {
-            const res = await fetch(
-                "http://localhost:3000/api/transacoes",
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ id }),
-                }
+            const res = await connection.delete(
+                "/transacoes",
+                JSON.stringify({ id })
             );
 
             if (!res.ok) {

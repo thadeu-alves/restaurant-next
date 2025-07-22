@@ -5,6 +5,7 @@ import { FoodTableRow } from "./ui/FoodTableRow";
 import { Comida } from "@/types";
 import Image from "next/image";
 import { Table } from "./ui/Table";
+import { connection } from "@/lib/connection";
 
 export function FoodTable() {
     const [comidas, setComidas] = useState<Comida[]>([]);
@@ -21,18 +22,11 @@ export function FoodTable() {
         setLoading(true);
         async function fetchData() {
             try {
-                const res = await fetch(
-                    "http://localhost:3000/api/comidas",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type":
-                                "application/json",
-                        },
-                        body: JSON.stringify({
-                            all: true,
-                        }),
-                    }
+                const res = await connection.post(
+                    "/comidas",
+                    JSON.stringify({
+                        all: true,
+                    })
                 );
                 const data = await res.json();
                 console.log(data);

@@ -3,6 +3,7 @@
 import { Categoria } from "@/types";
 import { useEffect, useState } from "react";
 import { Table } from "./ui/Table";
+import { connection } from "@/lib/connection";
 
 export function CategorieTable() {
     const [categories, setCategories] = useState<
@@ -14,8 +15,8 @@ export function CategorieTable() {
         async function fetchData() {
             try {
                 setLoading(true);
-                const data = await fetch(
-                    "http://localhost:3000/api/comidas"
+                const data = await connection.get(
+                    "/comidas"
                 );
                 const res = await data.json();
 
@@ -34,17 +35,11 @@ export function CategorieTable() {
     async function handleDelete(id: number) {
         try {
             setLoading(true);
-            const data = await fetch(
-                "http://localhost:3000/api/categorias",
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        categoriaId: id,
-                    }),
-                }
+            const data = await connection.delete(
+                "/categorias",
+                JSON.stringify({
+                    categoriaId: id,
+                })
             );
             const res = await data.json();
             console.log(res);

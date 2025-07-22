@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Form } from "./ui/Form";
+import { connection } from "@/lib/connection";
 
 interface FormProps {
     amount: string;
@@ -21,21 +22,15 @@ export function TransactionForm() {
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         try {
-            const response = await fetch(
-                "http://localhost:3000/api/transacoes",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        ...formData,
-                        amount: parseFloat(formData.amount),
-                    }),
-                }
+            const res = await connection.post(
+                "/transacoes",
+                JSON.stringify({
+                    ...formData,
+                    amount: parseFloat(formData.amount),
+                })
             );
 
-            if (!response.ok) {
+            if (!res.ok) {
                 throw new Error(
                     "Failed to create transaction item"
                 );

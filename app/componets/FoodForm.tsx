@@ -12,6 +12,7 @@ export interface FormProps {
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form } from "./ui/Form";
+import { connection } from "@/lib/connection";
 
 export function FoodForm({
     titulo,
@@ -62,44 +63,30 @@ export function FoodForm({
         setError("");
 
         try {
-            const response = isUpdate
-                ? await fetch(
-                      "http://localhost:3000/api/comidas",
-                      {
-                          method: "PUT",
-                          headers: {
-                              "Content-Type":
-                                  "application/json",
-                          },
-                          body: JSON.stringify({
-                              ...formData,
-                              categoriaId: Number(
-                                  formData.categoriaId
-                              ),
-                              preco: formData.preco,
-                              comidaId: Number(id),
-                          }),
-                      }
+            const res = isUpdate
+                ? await connection.put(
+                      "/comidas",
+                      JSON.stringify({
+                          ...formData,
+                          categoriaId: Number(
+                              formData.categoriaId
+                          ),
+                          preco: formData.preco,
+                          comidaId: Number(id),
+                      })
                   )
-                : await fetch(
-                      "http://localhost:3000/api/comidas",
-                      {
-                          method: "POST",
-                          headers: {
-                              "Content-Type":
-                                  "application/json",
-                          },
-                          body: JSON.stringify({
-                              ...formData,
-                              categoriaId: Number(
-                                  formData.categoriaId
-                              ),
-                              preco: formData.preco,
-                          }),
-                      }
+                : await connection.post(
+                      "/comidas",
+                      JSON.stringify({
+                          ...formData,
+                          categoriaId: Number(
+                              formData.categoriaId
+                          ),
+                          preco: formData.preco,
+                      })
                   );
 
-            if (!response.ok) {
+            if (!res.ok) {
                 throw new Error(
                     "Failed to create food item"
                 );
@@ -121,7 +108,10 @@ export function FoodForm({
                     : "An unknown error occurred"
             );
         } finally {
-            setIsLoading(false);
+            setTimeout(() => {
+                window.location.reload();
+                setIsLoading(false);
+            }, 500);
         }
     }
 
