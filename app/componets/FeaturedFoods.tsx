@@ -5,6 +5,7 @@ import { Food, FoodProps } from "./ui/Food";
 import { Categoria } from "@/types";
 import { FoodList } from "./ui/FoodList";
 import { PageTitle } from "./ui/PageTitle";
+import { connection } from "@/lib/connection";
 
 export function FeaturedFoods() {
     const [foods, setFoods] = useState<FoodProps[]>();
@@ -14,8 +15,8 @@ export function FeaturedFoods() {
         async function fetchData() {
             try {
                 setLoading(true);
-                const res = await fetch(
-                    "http://localhost:3000/api/comidas"
+                const res = await connection.get(
+                    "/comidas"
                 );
                 const data = await res.json();
 

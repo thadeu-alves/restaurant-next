@@ -4,6 +4,7 @@ import { Categoria } from "@/types";
 import { useEffect, useState } from "react";
 import { Food } from "./ui/Food";
 import { FoodList } from "./ui/FoodList";
+import { connection } from "@/lib/connection";
 
 export function FoodListMenu() {
     const [categorias, setCategorias] = useState<
@@ -15,8 +16,8 @@ export function FoodListMenu() {
         setLoading(true);
         async function fetchData() {
             try {
-                const res = await fetch(
-                    "http://localhost:3000/api/comidas"
+                const res = await connection.get(
+                    "/comidas"
                 );
                 const data = await res.json();
                 setCategorias(data);
