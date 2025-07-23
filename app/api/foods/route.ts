@@ -3,39 +3,35 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const { titulo, preco, categoriaId, urlImg, all } =
+        const { title, price, categoryId, urlImg, all } =
             await req.json();
 
         if (all) {
-            const data = await prisma.comida.findMany({
-                include: {
-                    categoria: true,
-                },
-            });
+            const data = await prisma.food.findMany();
 
-            return Response.json({ data });
+            return NextResponse.json(
+                { data },
+                { status: 201 }
+            );
         }
 
-        if (!titulo || !preco || !categoriaId) {
+        if (!title || !price || !categoryId) {
             return NextResponse.json(
-                { error: "Campos obrigatórios faltando!" },
+                { error: "Missing props!" },
                 { status: 400 }
             );
         }
 
-        const comida = await prisma.comida.create({
+        const food = await prisma.food.create({
             data: {
-                titulo,
-                preco,
-                categoriaId,
+                title,
+                price,
+                categoryId,
                 urlImg,
-            },
-            include: {
-                categoria: true,
             },
         });
 
-        return NextResponse.json(comida, { status: 201 });
+        return NextResponse.json(food, { status: 201 });
     } catch (err) {
         return NextResponse.json(
             {
@@ -48,9 +44,9 @@ export async function POST(req: Request) {
 
 export async function GET() {
     try {
-        const data = await prisma.categoria.findMany({
+        const data = await prisma.category.findMany({
             include: {
-                comidas: true,
+                foods: true,
             },
         });
 
@@ -69,39 +65,29 @@ export async function GET() {
 
 export async function PUT(req: Request) {
     try {
-        const {
-            titulo,
-            preco,
-            categoriaId,
-            urlImg,
-            comidaId,
-        } = await req.json();
+        const { title, price, categoryId, urlImg, id } =
+            await req.json();
 
-        if (
-            !titulo ||
-            !preco ||
-            !categoriaId ||
-            !comidaId
-        ) {
+        if (!title || !price || !categoryId || !id) {
             return NextResponse.json(
-                { error: "Campos obrigatórios faltando!" },
+                { error: "Missing props!" },
                 { status: 400 }
             );
         }
 
-        const comida = await prisma.comida.update({
+        const food = await prisma.food.update({
             where: {
-                id: comidaId,
+                id,
             },
             data: {
-                titulo,
-                preco,
-                categoriaId,
+                title,
+                price,
+                categoryId,
                 urlImg,
             },
         });
 
-        return NextResponse.json(comida, { status: 200 });
+        return NextResponse.json(food, { status: 200 });
     } catch (err) {
         return NextResponse.json(
             {
@@ -116,22 +102,22 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
     try {
-        const { comidaId } = await req.json();
+        const { id } = await req.json();
 
-        if (!comidaId) {
+        if (!id) {
             return NextResponse.json(
-                { error: "Campos obrigatórios faltando!" },
+                { error: "Missing id prop!" },
                 { status: 400 }
             );
         }
 
-        const comida = await prisma.comida.deleteMany({
+        const food = await prisma.food.deleteMany({
             where: {
-                id: comidaId,
+                id,
             },
         });
 
-        return NextResponse.json(comida, { status: 200 });
+        return NextResponse.json(food, { status: 200 });
     } catch (err) {
         return NextResponse.json(
             {

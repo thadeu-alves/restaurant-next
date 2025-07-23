@@ -1,20 +1,20 @@
-export interface Categoria {
+export interface Category {
     id: number;
-    nome: string;
-    comidas?: Comida[]; // Opcional porque é um relacionamento
+    name: string;
+    foods?: Food[]; // Opcional porque é um relacionamento
 }
 
-export interface Comida {
+export interface Food {
     id: number;
-    titulo: string;
-    preco: string; // Como definido no schema (string para formatos como "R$ 29,90")
+    title: string;
+    price: number;
     urlImg: string;
-    categoriaId: number;
-    categoria?: Categoria; // Relacionamento opcional
+    categoryId: number;
+    category?: Category;
 }
 
 export interface Evento {
     id: number;
-    data: Date; // DateTime no Prisma vira Date no TypeScript
-    descricao: string | null; // Opcional (nullable no schema)
+    date: Date;
+    description: string | null;
 }

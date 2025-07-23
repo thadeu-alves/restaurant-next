@@ -13,12 +13,12 @@ export function Header() {
             title: "Home",
         },
         {
-            href: "/cardapio",
+            href: "/menu",
             title: "Menu",
         },
         {
-            href: "/lista",
-            title: "Foods List",
+            href: "/cart",
+            title: "Foods Cart",
         },
     ];
 

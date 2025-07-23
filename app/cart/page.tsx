@@ -1,11 +1,12 @@
 "use client";
 import { storageFoods } from "@/lib/storage";
-import { Food, FoodProps } from "../componets/ui/Food";
+import { Food } from "../componets/ui/Food";
 import { ButtonLink } from "../componets/ui/ButtonLink";
 import { PageBackButton } from "../componets/ui/PageBackButton";
 import Link from "next/link";
 import { PageTitle } from "../componets/ui/PageTitle";
 import { FoodList } from "../componets/ui/FoodList";
+import { Food as FoodProps } from "@/types";
 
 interface FoodWithQuantity extends FoodProps {
     quantidade: number;
@@ -16,21 +17,21 @@ export default function page() {
         foods: FoodProps[]
     ): FoodWithQuantity[] {
         return foods.reduce(
-            (acumulador: FoodWithQuantity[], foodAtual) => {
+            (acumulador: FoodWithQuantity[], actual) => {
                 const itemExistente = acumulador.find(
                     (item) =>
-                        item.titulo === foodAtual.titulo &&
-                        item.preco === foodAtual.preco &&
-                        item.categoriaId ===
-                            foodAtual.categoriaId &&
-                        item.urlImg === foodAtual.urlImg
+                        item.title === actual.title &&
+                        item.price === actual.price &&
+                        item.categoryId ===
+                            actual.categoryId &&
+                        item.urlImg === actual.urlImg
                 );
 
                 if (itemExistente) {
                     itemExistente.quantidade++;
                 } else {
                     acumulador.push({
-                        ...foodAtual,
+                        ...actual,
                         quantidade: 1,
                     });
                 }
@@ -62,10 +63,11 @@ export default function page() {
                         {foodsFinal.map((food) => {
                             return (
                                 <Food
-                                    categoriaId=""
-                                    preco={food.preco}
+                                    id={0}
+                                    title={food.title}
+                                    price={food.price}
+                                    categoryId={0}
                                     showButton={false}
-                                    titulo={food.titulo}
                                     urlImg=""
                                     key={foodsFinal.indexOf(
                                         food

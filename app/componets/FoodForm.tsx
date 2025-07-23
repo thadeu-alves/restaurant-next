@@ -1,9 +1,9 @@
 "use client";
 
 export interface FormProps {
-    titulo: string;
-    preco: string;
-    categoriaId: string;
+    title: string;
+    price: number;
+    categoryId: string;
     urlImg: string;
     isUpdate: boolean;
     id?: number;
@@ -15,46 +15,43 @@ import { Form } from "./ui/Form";
 import { connection } from "@/lib/connection";
 
 export function FoodForm({
-    titulo,
-    preco,
-    categoriaId,
+    title,
+    price,
+    categoryId,
     urlImg,
     isUpdate,
     id,
 }: FormProps) {
     const router = useRouter();
     const [formData, setFormData] = useState({
-        titulo,
-        preco,
-        categoriaId,
+        title,
+        price,
+        categoryId,
         urlImg,
     });
 
     const [categories, setCategories] = useState<
         Array<{
             id: number;
-            nome: string;
+            name: string;
         }>
     >([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        async function fetchCategories() {
-            try {
-                const response = await fetch(
-                    "http://localhost:3000/api/categorias",
-                    {
-                        method: "GET",
-                    }
+        try {
+            async function fetchCategories() {
+                const response = await connection.get(
+                    "/categorias"
                 );
                 const { data } = await response.json();
                 setCategories(data);
-            } catch (err) {
-                setError("Failed to load categories" + err);
             }
+            fetchCategories();
+        } catch (err) {
+            setError("Failed to load categories" + err);
         }
-        fetchCategories();
     }, []);
 
     async function handleSubmit(e: React.FormEvent) {
@@ -65,26 +62,34 @@ export function FoodForm({
         try {
             const res = isUpdate
                 ? await connection.put(
-                      "/comidas",
+                      "/foods",
                       JSON.stringify({
                           ...formData,
-                          categoriaId: Number(
-                              formData.categoriaId
+                          categoryId: Number(
+                              formData.categoryId
                           ),
-                          preco: formData.preco,
-                          comidaId: Number(id),
+                          price: Number(formData.price),
+                          id: Number(id),
                       })
                   )
                 : await connection.post(
-                      "/comidas",
+                      "/foods",
                       JSON.stringify({
                           ...formData,
-                          categoriaId: Number(
-                              formData.categoriaId
+                          categoryId: Number(
+                              formData.categoryId
                           ),
-                          preco: formData.preco,
+                          price: Number(formData.price),
                       })
                   );
+
+            console.log(
+                JSON.stringify({
+                    ...formData,
+                    categoryId: Number(formData.categoryId),
+                    price: Number(formData.price),
+                })
+            );
 
             if (!res.ok) {
                 throw new Error(
@@ -93,14 +98,13 @@ export function FoodForm({
             }
 
             setFormData({
-                titulo: "",
-                preco: "",
-                categoriaId: "",
+                title: "",
+                price: 0,
+                categoryId: "",
                 urlImg: "",
             });
 
             if (isUpdate) router.back();
-            window.location.reload();
         } catch (err) {
             setError(
                 err instanceof Error
@@ -143,29 +147,31 @@ export function FoodForm({
             >
                 <Form.Label
                     label="Food Name"
-                    titulo="titulo"
-                    value={formData.titulo}
+                    title="title"
+                    value={formData.title}
                     handleChange={handleChange}
                 />
 
                 <Form.Label
                     label="Price"
-                    titulo="preco"
-                    value={formData.preco}
+                    title="price"
+                    type="number"
+                    value={formData.price.toString()}
                     handleChange={handleChange}
+                    required
                 />
 
                 <div>
                     <label
-                        htmlFor="categoriaId"
+                        htmlFor="categoryId"
                         className="block text-sm font-medium text-[var(--primary)]"
                     >
                         Category
                     </label>
                     <select
-                        id="categoriaId"
-                        name="categoriaId"
-                        value={formData.categoriaId}
+                        id="categoryId"
+                        name="categoryId"
+                        value={formData.categoryId}
                         onChange={handleChange}
                         required
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
@@ -178,7 +184,7 @@ export function FoodForm({
                                 key={category.id}
                                 value={category.id}
                             >
-                                {category.nome}
+                                {category.name}
                             </option>
                         ))}
                     </select>
@@ -186,7 +192,7 @@ export function FoodForm({
 
                 <Form.Label
                     label="Image URL (optional)"
-                    titulo="urlImg"
+                    title="urlImg"
                     type="url"
                     value={formData.urlImg}
                     handleChange={handleChange}

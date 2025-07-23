@@ -1,5 +1,5 @@
 interface FormLabelProps {
-    titulo: string;
+    title: string;
     handleChange: (
         e: React.ChangeEvent<
             HTMLInputElement | HTMLSelectElement
@@ -48,7 +48,7 @@ function FormTitle({
 }
 
 function FormLabel({
-    titulo,
+    title,
     handleChange,
     label,
     value,
@@ -58,15 +58,15 @@ function FormLabel({
     return (
         <div>
             <label
-                htmlFor={titulo}
+                htmlFor={title}
                 className="block text-sm font-medium text-[var(--primary)]"
             >
                 {label}
             </label>
             <input
                 type={type || "text"}
-                id={titulo}
-                name={titulo}
+                id={title}
+                name={title}
                 value={value}
                 onChange={handleChange}
                 required={required}

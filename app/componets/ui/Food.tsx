@@ -1,32 +1,26 @@
 "use client";
 import { storageFoods } from "@/lib/storage";
+import { Food as FoodProp } from "@/types";
 import Image from "next/image";
 import { useState } from "react";
 
-export interface FoodProps {
-    titulo: string;
-    preco: string;
-    categoriaId: string;
-    urlImg: string;
-}
-
 export function Food({
-    titulo,
-    preco,
-    categoriaId,
+    title,
+    price,
+    categoryId,
     urlImg,
     showButton = true,
     quantity = 1,
-}: FoodProps & { showButton: boolean; quantity: number }) {
+}: FoodProp & { showButton: boolean; quantity: number }) {
     const [loading, setLoading] = useState(false);
     const [carded, setCarded] = useState(false);
 
     function handleAdd() {
         setLoading(true);
         storageFoods.add({
-            titulo,
-            preco,
-            categoriaId,
+            title,
+            price,
+            categoryId,
             urlImg,
         });
         setTimeout(() => {
@@ -46,11 +40,11 @@ export function Food({
             />
             <div className="flex-1 text-center flex flex-col justify-center space-y-2">
                 <h1 className="font-semibold text-xl">
-                    {titulo}
+                    {title}
                 </h1>
                 <h2 className="text-amber-400 font-semibold text-2xl">
                     R$
-                    {preco}
+                    {price}
                 </h2>
                 {showButton && (
                     <button

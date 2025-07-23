@@ -3,22 +3,22 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const { titulo } = await req.json();
+        const { name } = await req.json();
 
-        if (!titulo) {
+        if (!name) {
             return NextResponse.json(
                 { error: "Campos obrigatórios faltando!" },
                 { status: 400 }
             );
         }
 
-        const categoria = await prisma.categoria.create({
+        const category = await prisma.category.create({
             data: {
-                nome: titulo,
+                name,
             },
         });
 
-        return NextResponse.json(categoria, {
+        return NextResponse.json(category, {
             status: 201,
         });
     } catch (err) {
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
 export async function GET() {
     try {
-        const data = await prisma.categoria.findMany({});
+        const data = await prisma.category.findMany({});
 
         return NextResponse.json({ data });
     } catch (err) {
@@ -48,25 +48,25 @@ export async function GET() {
 
 export async function PUT(req: Request) {
     try {
-        const { categoriaId, titulo } = await req.json();
+        const { id, name } = await req.json();
 
-        if (!categoriaId && !titulo) {
+        if (!id && !name) {
             return NextResponse.json(
-                { error: "Campos obrigatórios faltando!" },
+                { error: "Missing Props!" },
                 { status: 400 }
             );
         }
 
-        const categoria = await prisma.categoria.update({
+        const category = await prisma.category.update({
             where: {
-                id: categoriaId,
+                id,
             },
             data: {
-                nome: titulo,
+                name,
             },
         });
 
-        return NextResponse.json(categoria, {
+        return NextResponse.json(category, {
             status: 200,
         });
     } catch (err) {
@@ -85,42 +85,42 @@ export async function PUT(req: Request) {
 
 export async function DELETE(req: Request) {
     try {
-        const { categoriaId } = await req.json();
+        const { id } = await req.json();
 
-        if (!categoriaId) {
+        if (!id) {
             return NextResponse.json(
-                { error: "Campos obrigatórios faltando!" },
+                { error: "Missing props!" },
                 { status: 400 }
             );
         }
 
-        const categoria = await prisma.categoria.findMany({
+        const category = await prisma.category.findMany({
             where: {
-                id: categoriaId,
+                id,
             },
             include: {
-                comidas: true,
+                foods: true,
             },
         });
 
-        console.log(categoria[0].comidas);
+        console.log(category[0].foods);
 
-        if (categoria[0].comidas.length > 0) {
+        if (category[0].foods.length > 0) {
             return NextResponse.json(
                 {
-                    error: "Só é possivel deletar uma categoria vazia!",
+                    error: "It is only possible to delete a category empty!",
                 },
                 { status: 400 }
             );
         }
 
-        await prisma.categoria.deleteMany({
+        await prisma.category.deleteMany({
             where: {
-                id: categoriaId,
+                id,
             },
         });
 
-        return NextResponse.json(categoria, {
+        return NextResponse.json(category, {
             status: 200,
         });
     } catch (err) {

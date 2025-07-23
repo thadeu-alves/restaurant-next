@@ -1,32 +1,30 @@
 "use client";
 
-import { Categoria } from "@/types";
+import { Category } from "@/types";
 import { useEffect, useState } from "react";
 import { Table } from "./ui/Table";
 import { connection } from "@/lib/connection";
 
 export function CategorieTable() {
     const [categories, setCategories] = useState<
-        Categoria[]
+        Category[]
     >([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        async function fetchData() {
-            try {
+        try {
+            async function fetchData() {
                 setLoading(true);
-                const res = await connection.get(
-                    "/comidas"
-                );
+                const res = await connection.get("/foods");
                 const { data } = await res.json();
                 setCategories(data);
-            } catch (err) {
-                console.log(err);
-            } finally {
-                setLoading(false);
             }
+            fetchData();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
         }
-        fetchData();
     }, []);
 
     async function handleDelete(id: number) {
@@ -66,33 +64,35 @@ export function CategorieTable() {
                         <th>Loading...</th>
                     </tr>
                 ) : (
-                    categories?.map((cat) => {
-                        return (
-                            <Table.BodyElement key={cat.id}>
-                                <td
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                                >
-                                    {cat.nome}
-                                </td>
-                                <td className="text-center">
-                                    {cat.comidas?.length}
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <span
-                                        className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
-                                        onClick={() =>
-                                            handleDelete(
-                                                cat.id
-                                            )
-                                        }
+                    categories?.map(
+                        ({ name, foods, id }) => {
+                            return (
+                                <Table.BodyElement key={id}>
+                                    <td
+                                        scope="row"
+                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                     >
-                                        Delete
-                                    </span>
-                                </td>
-                            </Table.BodyElement>
-                        );
-                    })
+                                        {name}
+                                    </td>
+                                    <td className="text-center">
+                                        {foods?.length}
+                                    </td>
+                                    <td className="px-6 py-4 text-right">
+                                        <span
+                                            className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
+                                            onClick={() =>
+                                                handleDelete(
+                                                    id
+                                                )
+                                            }
+                                        >
+                                            Delete
+                                        </span>
+                                    </td>
+                                </Table.BodyElement>
+                            );
+                        }
+                    )
                 )}
             </Table.Body>
         </Table.Container>

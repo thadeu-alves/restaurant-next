@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Food, FoodProps } from "./ui/Food";
-import { Categoria } from "@/types";
+import { Food } from "./ui/Food";
+import { Category, Food as FoodProps } from "@/types";
 import { FoodList } from "./ui/FoodList";
 import { PageTitle } from "./ui/PageTitle";
 import { connection } from "@/lib/connection";
@@ -15,20 +15,16 @@ export function FeaturedFoods() {
         async function fetchData() {
             try {
                 setLoading(true);
-                const res = await connection.get(
-                    "/comidas"
-                );
+                const res = await connection.get("/foods");
                 const { data } = await res.json();
 
                 const allFoods = data.flatMap(
-                    (categoria: Categoria) =>
-                        categoria.comidas
+                    (categoria: Category) => categoria.foods
                 );
 
                 const sortedFoods = allFoods.sort(
                     (a: FoodProps, b: FoodProps) =>
-                        parseFloat(a.preco) -
-                        parseFloat(b.preco)
+                        a.price - b.price
                 );
 
                 setFoods(sortedFoods);
@@ -62,19 +58,22 @@ export function FeaturedFoods() {
                 </PageTitle.Sub>
             </div>
             <FoodList>
-                {foods?.slice(0, 6).map((food) => {
-                    return (
-                        <Food
-                            titulo={food.titulo}
-                            categoriaId="0"
-                            preco={food.preco}
-                            urlImg=""
-                            key={foods.indexOf(food)}
-                            showButton
-                            quantity={1}
-                        />
-                    );
-                })}
+                {foods
+                    ?.slice(0, 6)
+                    .map(({ title, price }, id) => {
+                        return (
+                            <Food
+                                id={id}
+                                title={title}
+                                categoryId={0}
+                                price={price}
+                                urlImg=""
+                                key={id}
+                                showButton
+                                quantity={1}
+                            />
+                        );
+                    })}
             </FoodList>
         </div>
     );

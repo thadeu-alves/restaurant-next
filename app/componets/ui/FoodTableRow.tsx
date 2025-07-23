@@ -3,7 +3,7 @@ import { Table } from "./Table";
 
 interface FoodTableRowProps {
     title: string;
-    price: string;
+    price: number;
     category: string;
     id: number;
 }

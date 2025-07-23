@@ -7,7 +7,7 @@ import { connection } from "@/lib/connection";
 
 export function CategorieForm() {
     const [formData, setFormData] = useState({
-        titulo: "",
+        name: "",
     });
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ export function CategorieForm() {
             }
 
             setFormData({
-                titulo: "",
+                name: "",
             });
         } catch (err) {
             setError(
@@ -78,9 +78,10 @@ export function CategorieForm() {
             >
                 <FormLabel
                     label="Categorie Name"
-                    titulo="titulo"
-                    value={formData.titulo}
+                    titulo="name"
+                    value={formData.name}
                     handleChange={handleChange}
+                    required
                 />
 
                 <FormSubmit

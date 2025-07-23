@@ -1,6 +1,6 @@
 "use client";
 
-import { Categoria } from "@/types";
+import { Category } from "@/types";
 import { useEffect, useState } from "react";
 import { Food } from "./ui/Food";
 import { FoodList } from "./ui/FoodList";
@@ -8,7 +8,7 @@ import { connection } from "@/lib/connection";
 
 export function FoodListMenu() {
     const [categorias, setCategorias] = useState<
-        Categoria[]
+        Category[]
     >([]);
     const [loading, setLoading] = useState(false);
 
@@ -16,9 +16,7 @@ export function FoodListMenu() {
         setLoading(true);
         async function fetchData() {
             try {
-                const res = await connection.get(
-                    "/comidas"
-                );
+                const res = await connection.get("/foods");
                 const { data } = await res.json();
                 setCategorias(data);
             } catch (err) {
@@ -48,18 +46,19 @@ export function FoodListMenu() {
                         className="space-y-6 mb-6 container mx-auto"
                     >
                         <h1 className="text-center text-primary text-lg uppercase">
-                            {cat.nome}
+                            {cat.name}
                         </h1>
                         <FoodList>
-                            {cat.comidas?.map(
-                                ({ id, preco, titulo }) => {
+                            {cat.foods?.map(
+                                ({ id, price, title }) => {
                                     return (
                                         <Food
-                                            preco={preco}
-                                            titulo={titulo}
+                                            id={0}
+                                            title={title}
+                                            price={price}
                                             key={id}
                                             quantity={1}
-                                            categoriaId=""
+                                            categoryId={0}
                                             urlImg=""
                                             showButton
                                         />

@@ -2,15 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { FoodTableRow } from "./ui/FoodTableRow";
-import { Comida } from "@/types";
+import { Food as FoodProps } from "@/types";
 import Image from "next/image";
 import { Table } from "./ui/Table";
 import { connection } from "@/lib/connection";
 
 export function FoodTable() {
-    const [comidas, setComidas] = useState<Comida[]>([]);
+    const [foods, setFoods] = useState<FoodProps[]>([]);
     const [loading, setLoading] = useState(false);
-    const [filtered, setFiltered] = useState<Comida[]>([]);
+    const [filtered, setFiltered] = useState<FoodProps[]>(
+        []
+    );
     const [sortDirection, setSortDirection] = useState<
         "asc" | "desc"
     >("asc");
@@ -23,14 +25,14 @@ export function FoodTable() {
         async function fetchData() {
             try {
                 const res = await connection.post(
-                    "/comidas",
+                    "/foods",
                     JSON.stringify({
                         all: true,
                     })
                 );
                 const { data } = await res.json();
                 console.log(data);
-                setComidas(data);
+                setFoods(data);
             } catch (err) {
                 console.log(err);
             } finally {
@@ -42,18 +44,14 @@ export function FoodTable() {
     }, []);
 
     useEffect(() => {
-        const data = [...comidas];
+        const data = [...foods];
 
         if (sorted) {
             data.sort((a, b) => {
                 const aValue =
-                    sorted === "title"
-                        ? a.titulo
-                        : parseFloat(a.preco);
+                    sorted === "title" ? a.title : a.price;
                 const bValue =
-                    sorted === "title"
-                        ? b.titulo
-                        : parseFloat(b.preco);
+                    sorted === "title" ? b.title : b.price;
                 if (aValue < bValue)
                     return sortDirection === "asc" ? -1 : 1;
                 if (aValue > bValue)
@@ -63,7 +61,7 @@ export function FoodTable() {
         }
 
         setFiltered(data);
-    }, [sortDirection, sorted, comidas]);
+    }, [sortDirection, sorted, foods]);
 
     function handleSort(column: "title" | "price") {
         if (sorted === column) {
@@ -127,20 +125,26 @@ export function FoodTable() {
                     </tr>
                 ) : (
                     filtered.length > 0 &&
-                    filtered?.map((com) => {
-                        return (
-                            <FoodTableRow
-                                title={com.titulo}
-                                price={com.preco}
-                                category={
-                                    com.categoria?.nome ||
-                                    ""
-                                }
-                                id={com.id}
-                                key={com.id}
-                            />
-                        );
-                    })
+                    filtered?.map(
+                        ({
+                            title,
+                            price,
+                            category,
+                            id,
+                        }) => {
+                            return (
+                                <FoodTableRow
+                                    title={title}
+                                    price={price}
+                                    category={
+                                        category?.name || ""
+                                    }
+                                    id={id}
+                                    key={id}
+                                />
+                            );
+                        }
+                    )
                 )}
             </Table.Body>
         </Table.Container>
