@@ -18,7 +18,7 @@ export function FeaturedFoods() {
                 const res = await connection.get(
                     "/comidas"
                 );
-                const data = await res.json();
+                const { data } = await res.json();
 
                 const allFoods = data.flatMap(
                     (categoria: Categoria) =>

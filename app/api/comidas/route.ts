@@ -13,7 +13,7 @@ export async function POST(req: Request) {
                 },
             });
 
-            return Response.json(data);
+            return Response.json({ data });
         }
 
         if (!titulo || !preco || !categoriaId) {
@@ -54,7 +54,9 @@ export async function GET() {
             },
         });
 
-        return NextResponse.json(data);
+        return NextResponse.json({
+            data,
+        });
     } catch (err) {
         return NextResponse.json(
             {

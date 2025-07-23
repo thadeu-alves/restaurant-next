@@ -19,7 +19,7 @@ export function FoodListMenu() {
                 const res = await connection.get(
                     "/comidas"
                 );
-                const data = await res.json();
+                const { data } = await res.json();
                 setCategorias(data);
             } catch (err) {
                 console.log(err);

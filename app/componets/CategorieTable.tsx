@@ -15,14 +15,11 @@ export function CategorieTable() {
         async function fetchData() {
             try {
                 setLoading(true);
-                const data = await connection.get(
+                const res = await connection.get(
                     "/comidas"
                 );
-                const res = await data.json();
-
-                console.log(res);
-
-                setCategories(res);
+                const { data } = await res.json();
+                setCategories(data);
             } catch (err) {
                 console.log(err);
             } finally {

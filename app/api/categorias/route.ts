@@ -35,7 +35,7 @@ export async function GET() {
     try {
         const data = await prisma.categoria.findMany({});
 
-        return NextResponse.json(data);
+        return NextResponse.json({ data });
     } catch (err) {
         return NextResponse.json(
             {

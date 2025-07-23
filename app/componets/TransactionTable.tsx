@@ -28,7 +28,7 @@ export function TransactionTable() {
                 const res = await connection.get(
                     "/transacoes"
                 );
-                const data = await res.json();
+                const { data } = await res.json();
                 setTransactions(data);
             } catch (err) {
                 console.log(err);

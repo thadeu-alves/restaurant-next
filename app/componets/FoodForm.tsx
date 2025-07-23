@@ -48,7 +48,7 @@ export function FoodForm({
                         method: "GET",
                     }
                 );
-                const data = await response.json();
+                const { data } = await response.json();
                 setCategories(data);
             } catch (err) {
                 setError("Failed to load categories" + err);
