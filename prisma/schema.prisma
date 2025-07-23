@@ -7,19 +7,19 @@ datasource db {
   url      = "file:./restaurante.db" 
 }
 
-model Categoria {
+model Category {
   id      Int      @id @default(autoincrement())
-  nome    String   @unique
-  comidas Comida[]
+  name    String   @unique
+  foods Food[]
 }
 
-model Comida {
+model Food {
   id          Int       @id @default(autoincrement())
-  titulo      String
-  preco       String
+  title      String
+  price       Float
   urlImg      String
-  categoria   Categoria @relation(fields: [categoriaId], references: [id])
-  categoriaId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
 }
 
 
@@ -27,6 +27,6 @@ model Transaction {
   id          Int      @id @default(autoincrement())
   amount      Float    @default(0.0)
   type        String   // "INCOME" or "EXPENSE"
-  description String?  // Optional field for notes (e.g., "Food sales", "Rent")
+  description String?  
   createdAt   DateTime @default(now())
 }
