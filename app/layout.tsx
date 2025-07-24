@@ -23,7 +23,7 @@ export default function RootLayout({
                 <head>
                     <title>Admin Page</title>
                 </head>
-                <body className="antialiased min-h-screen flex max-h-screen overflow-hidden">
+                <body className="antialiased md:min-h-screen md:max-h-screen md:overflow-hidden md:flex">
                     <AdminHeader />
                     {children}
                 </body>
