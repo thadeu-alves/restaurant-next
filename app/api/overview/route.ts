@@ -3,13 +3,22 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const saldo = await transaction.saldo();
-        const quantidadeComidas =
-            await prisma.comida.count();
+        const income = await transaction.income();
+        const expense = await transaction.expense();
+        const balance = await transaction.saldo();
+        const foodsAmount = await prisma.food.count();
+        const foodsAttach = await prisma.food.aggregate({
+            _sum: {
+                price: true,
+            },
+        });
 
         return NextResponse.json({
-            saldo,
-            foodsAmount: quantidadeComidas,
+            income,
+            expense,
+            balance,
+            foodsAmount,
+            foodsAttach: foodsAttach._sum.price,
         });
     } catch (err) {
         return NextResponse.json(
@@ -32,9 +41,7 @@ const transaction = {
             },
         });
 
-        console.log(data);
-
-        return data;
+        return data._sum.amount;
     },
     async expense() {
         const data = await prisma.transaction.aggregate({
@@ -46,17 +53,12 @@ const transaction = {
             },
         });
 
-        console.log(data);
-
-        return data;
+        return data._sum.amount;
     },
     async saldo() {
         const income = await this.income();
         const expense = await this.expense();
 
-        return (
-            (income._sum.amount || 0) -
-            (expense._sum.amount || 0)
-        );
+        return (income || 0) - (expense || 0);
     },
 };
