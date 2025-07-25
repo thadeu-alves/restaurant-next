@@ -1,19 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { FormLabel } from "./ui/FormLabel";
 import { FormSubmit } from "./ui/FormSubmit";
 import { connection } from "@/lib/connection";
+import { useForm } from "react-hook-form";
+import { Form } from "./ui/Form";
+
+interface CategoryFormData {
+    name: string;
+}
 
 export function CategorieForm() {
-    const [formData, setFormData] = useState({
-        name: "",
-    });
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<CategoryFormData>({
+        defaultValues: {
+            name: "",
+        },
+    });
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
+    async function onSubmit(data: CategoryFormData) {
         setIsLoading(true);
         setError("");
 
@@ -21,7 +32,7 @@ export function CategorieForm() {
             const res = await connection.post(
                 "/categorias",
                 JSON.stringify({
-                    ...formData,
+                    ...data,
                 })
             );
 
@@ -31,9 +42,7 @@ export function CategorieForm() {
                 );
             }
 
-            setFormData({
-                name: "",
-            });
+            reset();
         } catch (err) {
             setError(
                 err instanceof Error
@@ -46,18 +55,6 @@ export function CategorieForm() {
                 setIsLoading(false);
             }, 500);
         }
-    }
-
-    function handleChange(
-        e: React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement
-        >
-    ) {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
     }
 
     return (
@@ -73,15 +70,15 @@ export function CategorieForm() {
             )}
 
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 className="space-y-4"
             >
-                <FormLabel
+                <Form.Label
                     label="Categorie Name"
-                    titulo="name"
-                    value={formData.name}
-                    handleChange={handleChange}
+                    register={register}
+                    title="name"
                     required
+                    error={errors.name?.message}
                 />
 
                 <FormSubmit

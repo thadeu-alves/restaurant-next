@@ -1,14 +1,12 @@
-interface FormLabelProps {
+import { UseFormRegister } from "react-hook-form";
+
+interface FormLabelProps<> {
     title: string;
-    handleChange: (
-        e: React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement
-        >
-    ) => void;
+    register: UseFormRegister<any>;
     label: string;
-    value: string;
     type?: string;
     required?: boolean;
+    error?: string;
 }
 
 interface FormSubmitProps {
@@ -49,12 +47,18 @@ function FormTitle({
 
 function FormLabel({
     title,
-    handleChange,
+    register,
     label,
-    value,
-    type,
-    required,
+    type = "text",
+    required = false,
+    error,
 }: FormLabelProps) {
+    const inputProps = register
+        ? register(title, {
+              required: required && `${label} is required`,
+          })
+        : { name: title };
+
     return (
         <div>
             <label
@@ -62,15 +66,17 @@ function FormLabel({
                 className="block text-sm font-medium text-[var(--primary)]"
             >
                 {label}
+                {required && (
+                    <span className="text-red-500"> *</span>
+                )}
             </label>
             <input
-                type={type || "text"}
+                type={type}
                 id={title}
-                name={title}
-                value={value}
-                onChange={handleChange}
-                required={required}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border ${
+                    error ? "border-red-500" : ""
+                }`}
+                {...inputProps}
             />
         </div>
     );

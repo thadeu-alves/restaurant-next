@@ -3,30 +3,37 @@
 import React, { useState } from "react";
 import { Form } from "./ui/Form";
 import { connection } from "@/lib/connection";
+import { useForm } from "react-hook-form";
 
-interface FormProps {
+interface TransactionFormData {
     amount: string;
     type: "INCOME" | "EXPENSE" | "";
     description?: string;
 }
 
 export function TransactionForm() {
-    const [formData, setFormData] = useState<FormProps>({
-        amount: "",
-        type: "",
-        description: "",
-    });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    const {
+        register,
+        reset,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<TransactionFormData>({
+        defaultValues: {
+            amount: "",
+            type: "",
+            description: "",
+        },
+    });
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
+    async function onSubmit(data: TransactionFormData) {
         try {
             const res = await connection.post(
                 "/transacoes",
                 JSON.stringify({
-                    ...formData,
-                    amount: parseFloat(formData.amount),
+                    ...data,
+                    amount: parseFloat(data.amount),
                 })
             );
 
@@ -36,11 +43,7 @@ export function TransactionForm() {
                 );
             }
 
-            setFormData({
-                amount: "",
-                type: "",
-                description: "",
-            });
+            reset();
         } catch (err) {
             setError(
                 err instanceof Error
@@ -53,18 +56,6 @@ export function TransactionForm() {
                 setIsLoading(false);
             }, 500);
         }
-    }
-
-    function handleChange(
-        e: React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement
-        >
-    ) {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
     }
 
     return (
@@ -80,14 +71,15 @@ export function TransactionForm() {
             )}
 
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 className="space-y-4"
             >
                 <Form.Label
                     label="Transaction Amount"
-                    titulo="amount"
-                    value={formData?.amount || ""}
-                    handleChange={handleChange}
+                    title="amount"
+                    register={register}
+                    error={errors.amount?.message}
+                    required
                 />
 
                 <div>
@@ -95,18 +87,20 @@ export function TransactionForm() {
                         htmlFor="type"
                         className="block text-sm font-medium text-[var(--primary)]"
                     >
-                        Transaction Type
+                        Transaction Type{" "}
+                        <span className="text-red-500">
+                            *
+                        </span>
                     </label>
                     <select
                         id="type"
-                        name="type"
-                        value={formData?.type}
-                        onChange={handleChange}
-                        required
+                        {...register("type", {
+                            required: "Type is required",
+                        })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
                     >
                         <option value="">
-                            Select a Type
+                            Select a Type{" "}
                         </option>
                         <option key={0} value={"INCOME"}>
                             INCOME
@@ -119,9 +113,9 @@ export function TransactionForm() {
 
                 <Form.Label
                     label="Transaction Description (optional)"
-                    titulo="description"
-                    value={formData?.description || ""}
-                    handleChange={handleChange}
+                    title="description"
+                    register={register}
+                    error={errors.description?.message}
                 />
 
                 <Form.Submit

@@ -1,4 +1,9 @@
 "use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Form } from "./ui/Form";
+import { connection } from "@/lib/connection";
+import { useForm } from "react-hook-form";
 
 export interface FormProps {
     title: string;
@@ -9,10 +14,12 @@ export interface FormProps {
     id?: number;
 }
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Form } from "./ui/Form";
-import { connection } from "@/lib/connection";
+interface FoodFormData {
+    title: string;
+    price: number;
+    categoryId: string;
+    urlImg: string;
+}
 
 export function FoodForm({
     title,
@@ -23,13 +30,6 @@ export function FoodForm({
     id,
 }: FormProps) {
     const router = useRouter();
-    const [formData, setFormData] = useState({
-        title,
-        price,
-        categoryId,
-        urlImg,
-    });
-
     const [categories, setCategories] = useState<
         Array<{
             id: number;
@@ -38,6 +38,20 @@ export function FoodForm({
     >([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<FoodFormData>({
+        defaultValues: {
+            title,
+            categoryId,
+            price,
+            urlImg,
+        },
+    });
 
     useEffect(() => {
         try {
@@ -54,8 +68,7 @@ export function FoodForm({
         }
     }, []);
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
+    async function onSubmit(data: FoodFormData) {
         setIsLoading(true);
         setError("");
 
@@ -64,32 +77,24 @@ export function FoodForm({
                 ? await connection.put(
                       "/foods",
                       JSON.stringify({
-                          ...formData,
+                          ...data,
                           categoryId: Number(
-                              formData.categoryId
+                              data.categoryId
                           ),
-                          price: Number(formData.price),
+                          price: Number(data.price),
                           id: Number(id),
                       })
                   )
                 : await connection.post(
                       "/foods",
                       JSON.stringify({
-                          ...formData,
+                          ...data,
                           categoryId: Number(
-                              formData.categoryId
+                              data.categoryId
                           ),
-                          price: Number(formData.price),
+                          price: Number(data.price),
                       })
                   );
-
-            console.log(
-                JSON.stringify({
-                    ...formData,
-                    categoryId: Number(formData.categoryId),
-                    price: Number(formData.price),
-                })
-            );
 
             if (!res.ok) {
                 throw new Error(
@@ -97,12 +102,7 @@ export function FoodForm({
                 );
             }
 
-            setFormData({
-                title: "",
-                price: 0,
-                categoryId: "",
-                urlImg: "",
-            });
+            reset();
 
             if (isUpdate) router.back();
         } catch (err) {
@@ -119,18 +119,6 @@ export function FoodForm({
         }
     }
 
-    function handleChange(
-        e: React.ChangeEvent<
-            HTMLInputElement | HTMLSelectElement
-        >
-    ) {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    }
-
     return (
         <Form.Container>
             <Form.Title>Add New Food Item</Form.Title>
@@ -142,22 +130,23 @@ export function FoodForm({
             )}
 
             <form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 className="space-y-4"
             >
                 <Form.Label
                     label="Food Name"
                     title="title"
-                    value={formData.title}
-                    handleChange={handleChange}
+                    register={register}
+                    required
+                    error={errors.title?.message}
                 />
 
                 <Form.Label
                     label="Price"
                     title="price"
                     type="number"
-                    value={formData.price.toString()}
-                    handleChange={handleChange}
+                    register={register}
+                    error={errors.price?.message}
                     required
                 />
 
@@ -170,10 +159,10 @@ export function FoodForm({
                     </label>
                     <select
                         id="categoryId"
-                        name="categoryId"
-                        value={formData.categoryId}
-                        onChange={handleChange}
-                        required
+                        {...register("categoryId", {
+                            required:
+                                "Category is required",
+                        })}
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
                     >
                         <option value="">
@@ -191,11 +180,10 @@ export function FoodForm({
                 </div>
 
                 <Form.Label
-                    label="Image URL (optional)"
                     title="urlImg"
+                    register={register}
+                    label="Image URL (optional)"
                     type="url"
-                    value={formData.urlImg}
-                    handleChange={handleChange}
                 />
 
                 <Form.Submit
