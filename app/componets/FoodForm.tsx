@@ -4,6 +4,27 @@ import { useRouter } from "next/navigation";
 import { Form } from "./ui/Form";
 import { connection } from "@/lib/connection";
 import { useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const foodFormSchema = z.object({
+    title: z
+        .string()
+        .min(3, "The title must have 3 characters")
+        .max(50, "Max lenght of 50"),
+    price: z.coerce
+        .number({
+            required_error: "The price is required",
+            invalid_type_error: "Number invalid",
+        })
+        .positive("Price must be positive"),
+    categoryId: z.string().min(1, "Select a category"),
+    urlImg: z
+        .string()
+        .url("Url invalid")
+        .optional()
+        .or(z.literal("")),
+});
 
 export interface FormProps {
     title: string;
@@ -14,12 +35,7 @@ export interface FormProps {
     id?: number;
 }
 
-interface FoodFormData {
-    title: string;
-    price: number;
-    categoryId: string;
-    urlImg: string;
-}
+type FoodFormData = z.infer<typeof foodFormSchema>;
 
 export function FoodForm({
     title,
@@ -45,6 +61,7 @@ export function FoodForm({
         reset,
         formState: { errors },
     } = useForm<FoodFormData>({
+        resolver: zodResolver(foodFormSchema),
         defaultValues: {
             title,
             categoryId,
@@ -177,6 +194,11 @@ export function FoodForm({
                             </option>
                         ))}
                     </select>
+                    {errors.categoryId?.message && (
+                        <p className="mt-1 text-sm text-red-600">
+                            {errors.categoryId?.message}
+                        </p>
+                    )}
                 </div>
 
                 <Form.Label

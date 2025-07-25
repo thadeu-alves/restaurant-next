@@ -5,10 +5,17 @@ import { FormSubmit } from "./ui/FormSubmit";
 import { connection } from "@/lib/connection";
 import { useForm } from "react-hook-form";
 import { Form } from "./ui/Form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface CategoryFormData {
-    name: string;
-}
+const categoryFormSchema = z.object({
+    name: z
+        .string()
+        .min(1, "Category name is required")
+        .max(50, "Max lenght of 50"),
+});
+
+type CategoryFormData = z.infer<typeof categoryFormSchema>;
 
 export function CategorieForm() {
     const [error, setError] = useState("");
@@ -19,6 +26,7 @@ export function CategorieForm() {
         reset,
         formState: { errors },
     } = useForm<CategoryFormData>({
+        resolver: zodResolver(categoryFormSchema),
         defaultValues: {
             name: "",
         },

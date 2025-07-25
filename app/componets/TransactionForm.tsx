@@ -4,12 +4,28 @@ import React, { useState } from "react";
 import { Form } from "./ui/Form";
 import { connection } from "@/lib/connection";
 import { useForm } from "react-hook-form";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface TransactionFormData {
-    amount: string;
-    type: "INCOME" | "EXPENSE" | "";
-    description?: string;
-}
+const transactionFormSchema = z.object({
+    amount: z.coerce
+        .number({
+            required_error: "The amount is required",
+            invalid_type_error: "Number invalid",
+        })
+        .positive("Amount must be positive"),
+    type: z.string().min(1, "Select a type"),
+    description: z
+        .string()
+        .min(3, "The description must have 3 characters")
+        .max(50, "Max lenght of 50")
+        .optional()
+        .or(z.literal("")),
+});
+
+type TransactionFormData = z.infer<
+    typeof transactionFormSchema
+>;
 
 export function TransactionForm() {
     const [isLoading, setIsLoading] = useState(false);
@@ -20,8 +36,9 @@ export function TransactionForm() {
         handleSubmit,
         formState: { errors },
     } = useForm<TransactionFormData>({
+        resolver: zodResolver(transactionFormSchema),
         defaultValues: {
-            amount: "",
+            amount: 0,
             type: "",
             description: "",
         },
@@ -33,7 +50,7 @@ export function TransactionForm() {
                 "/transacoes",
                 JSON.stringify({
                     ...data,
-                    amount: parseFloat(data.amount),
+                    amount: data.amount,
                 })
             );
 
@@ -79,6 +96,7 @@ export function TransactionForm() {
                     title="amount"
                     register={register}
                     error={errors.amount?.message}
+                    type="number"
                     required
                 />
 
@@ -109,6 +127,11 @@ export function TransactionForm() {
                             EXPENSE
                         </option>
                     </select>
+                    {errors.type?.message && (
+                        <p className="mt-1 text-sm text-red-600">
+                            {errors.type?.message}
+                        </p>
+                    )}
                 </div>
 
                 <Form.Label
