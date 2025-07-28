@@ -1,5 +1,5 @@
-import { FoodForm } from "@/app/componets/FoodForm";
-import { FoodTable } from "@/app/componets/FoodTable";
+import { FoodForm } from "@/app/components/FoodForm";
+import { FoodTable } from "@/app/components/FoodTable";
 
 export default function page() {
     return (

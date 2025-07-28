@@ -1,11 +1,11 @@
 "use client";
 import { storageFoods } from "@/lib/storage";
-import { Food } from "../componets/ui/Food";
-import { ButtonLink } from "../componets/ui/ButtonLink";
-import { PageBackButton } from "../componets/ui/PageBackButton";
+import { Food } from "../components/ui/Food";
+import { ButtonLink } from "../components/ui/ButtonLink";
+import { PageBackButton } from "../components/ui/PageBackButton";
 import Link from "next/link";
-import { PageTitle } from "../componets/ui/PageTitle";
-import { FoodList } from "../componets/ui/FoodList";
+import { PageTitle } from "../components/ui/PageTitle";
+import { FoodList } from "../components/ui/FoodList";
 import { Food as FoodProps } from "@/types";
 
 interface FoodWithQuantity extends FoodProps {

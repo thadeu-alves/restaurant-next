@@ -1,7 +1,7 @@
 "use client";
 
-import { FoodProps } from "@/app/componets/ui/Food";
-import { FoodForm } from "@/app/componets/FoodForm";
+import { FoodForm } from "@/app/components/FoodForm";
+import { Food } from "@/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -13,7 +13,7 @@ interface PageProps {
 
 export default function Page({ params }: PageProps) {
     const { id } = params;
-    const [data, setData] = useState<FoodProps[]>([]);
+    const [data, setData] = useState<Food[]>([]);
 
     const router = useRouter();
 
@@ -69,9 +69,9 @@ export default function Page({ params }: PageProps) {
         <div className="flex-1 p-12 space-y-8 my-auto">
             {data[0] && (
                 <FoodForm
-                    categoriaId={data[0]?.categoriaId}
-                    preco={data[0]?.preco}
-                    titulo={data[0]?.titulo}
+                    categoryId={data[0]?.categoryId.toString()}
+                    price={data[0]?.price}
+                    title={data[0]?.title}
                     urlImg={data[0]?.urlImg}
                     id={parseInt(id)}
                     isUpdate={true}

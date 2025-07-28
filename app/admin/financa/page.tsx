@@ -1,5 +1,5 @@
-import { TransactionForm } from "@/app/componets/TransactionForm";
-import { TransactionTable } from "@/app/componets/TransactionTable";
+import { TransactionForm } from "@/app/components/TransactionForm";
+import { TransactionTable } from "@/app/components/TransactionTable";
 
 export default function page() {
     return (

@@ -1,5 +1,5 @@
-import { CategorieForm } from "@/app/componets/CategorieForm";
-import { CategorieTable } from "@/app/componets/CategorieTable";
+import { CategorieForm } from "@/app/components/CategorieForm";
+import { CategorieTable } from "@/app/components/CategorieTable";
 
 export default function page() {
     return (

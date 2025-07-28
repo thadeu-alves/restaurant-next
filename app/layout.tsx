@@ -1,9 +1,9 @@
 "use client";
 import "./globals.css";
-import { Header } from "./componets/Header";
+import { Header } from "./components/Header";
 import { Inter } from "next/font/google";
 import { usePathname } from "next/navigation";
-import { AdminHeader } from "./componets/AdminHeader";
+import { AdminHeader } from "./components/AdminHeader";
 
 const inter = Inter({
     subsets: ["latin"],

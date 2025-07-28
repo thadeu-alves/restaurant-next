@@ -1,7 +1,7 @@
-import { FoodListMenu } from "../componets/FoodListMenu";
-import { PageBackButton } from "../componets/ui/PageBackButton";
-import { ButtonLink } from "../componets/ui/ButtonLink";
-import { PageTitle } from "../componets/ui/PageTitle";
+import { FoodListMenu } from "../components/FoodListMenu";
+import { PageBackButton } from "../components/ui/PageBackButton";
+import { ButtonLink } from "../components/ui/ButtonLink";
+import { PageTitle } from "../components/ui/PageTitle";
 
 export default function page() {
     return (
