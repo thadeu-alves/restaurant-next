@@ -25,10 +25,6 @@ export function AdminHeader() {
             text: "Financies",
             href: "/admin/financa",
         },
-        {
-            text: "Tab",
-            href: "/",
-        },
     ];
 
     function handleOpen() {
