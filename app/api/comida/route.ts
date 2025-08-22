@@ -16,7 +16,7 @@ export async function POST(req: Request) {
             );
         }
 
-        const data = await prisma.comida.findMany({
+        const data = await prisma.food.findMany({
             where: {
                 id,
             },

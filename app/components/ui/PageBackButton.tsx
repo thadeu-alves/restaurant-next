@@ -8,13 +8,13 @@ export function PageBackButton({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex items-center gap-4 cursor-pointer">
-            <button
-                onClick={() => {
-                    window.history.back();
-                }}
-                className="rounded-full border-3 border-[var(--primary)]"
-            >
+        <div
+            onClick={() => {
+                window.history.back();
+            }}
+            className="flex items-center gap-4 cursor-pointer"
+        >
+            <button className="rounded-full border-3 border-[var(--primary)]">
                 <Image
                     alt="back icon"
                     src="/back.svg"

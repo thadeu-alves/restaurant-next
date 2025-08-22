@@ -18,7 +18,7 @@ export function Header() {
         },
         {
             href: "/cart",
-            title: "Foods Cart",
+            title: "Cart",
         },
     ];
 

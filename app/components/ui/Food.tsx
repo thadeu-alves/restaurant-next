@@ -33,7 +33,7 @@ export function Food({
         <li className="bg-primary text-white p-4 w-full h-full flex justify-between gap-2 rounded-2xl shadow-xl relative">
             <Image
                 alt="back icon"
-                src="/food.png"
+                src={urlImg ? urlImg : "/food.png"}
                 width={100}
                 height={100}
                 className="object-cover w-30 h-30 rounded-full my-auto"
@@ -60,7 +60,7 @@ export function Food({
                             {loading
                                 ? "Adding..."
                                 : carded
-                                ? "Into your Card!!"
+                                ? "Into your Cart!!"
                                 : "Add to Card"}
                         </span>
                     </button>

@@ -50,7 +50,7 @@ export default function page() {
             <PageBackButton>Back</PageBackButton>
             <div className="text-center space-y-4">
                 <PageTitle.Title invert={false}>
-                    Your Card
+                    Your Cart
                 </PageTitle.Title>
                 <PageTitle.Sub invert={false}>
                     Lorem Ipsum is simply dummy text of the

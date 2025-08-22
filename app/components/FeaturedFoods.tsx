@@ -60,14 +60,14 @@ export function FeaturedFoods() {
             <FoodList>
                 {foods
                     ?.slice(0, 6)
-                    .map(({ title, price }, id) => {
+                    .map(({ title, price, urlImg }, id) => {
                         return (
                             <Food
                                 id={id}
                                 title={title}
                                 categoryId={0}
                                 price={price}
-                                urlImg=""
+                                urlImg={urlImg}
                                 key={id}
                                 showButton
                                 quantity={1}

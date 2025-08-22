@@ -1,9 +1,10 @@
 "use client";
 
 import { FoodForm } from "@/app/components/FoodForm";
+import { connection } from "@/lib/connection";
 import { Food } from "@/types";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface PageProps {
     params: {
@@ -19,21 +20,14 @@ export default function Page({ params }: PageProps) {
 
     useEffect(() => {
         async function fetchData() {
-            const da = await fetch(
-                `http://localhost:3000/api/comida`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        id: parseInt(id),
-                    }),
-                }
+            const res = await connection.post(
+                "/comida",
+                JSON.stringify({
+                    id: parseInt(id),
+                })
             );
-            const res = await da.json();
-            console.log(res);
-            setData(res);
+            const da = await res.json();
+            setData(da);
         }
         fetchData();
     }, [id]);
