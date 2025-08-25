@@ -1,5 +1,7 @@
 export const connection = {
-    baseUrl: "https://clickrestaurant.vercel.app/api",
+    baseUrl: process.env.PRODUCTION
+        ? "https://clickrestaurant.vercel.app/api"
+        : "http://localhost:3000/api",
     async get(route: string) {
         const res = await fetch(this.baseUrl + route);
         return res;
