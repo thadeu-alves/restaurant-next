@@ -3,17 +3,12 @@
 import { FoodForm } from "@/app/components/FoodForm";
 import { connection } from "@/lib/connection";
 import { Food } from "@/types";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-interface PageProps {
-    params: {
-        id: string;
-    };
-}
-
-export default function Page({ params }: PageProps) {
-    const { id } = params;
+export default function Page() {
+    const params = useParams();
+    const id = params.id as string;
     const [data, setData] = useState<Food[]>([]);
 
     const router = useRouter();
