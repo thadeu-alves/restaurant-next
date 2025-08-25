@@ -22,6 +22,7 @@ export function Food({
             price,
             categoryId,
             urlImg,
+            id: 0,
         });
         setTimeout(() => {
             setLoading(false);
