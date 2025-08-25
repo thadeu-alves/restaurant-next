@@ -4,6 +4,7 @@ import { Header } from "./components/Header";
 import { Inter } from "next/font/google";
 import { usePathname } from "next/navigation";
 import { AdminHeader } from "./components/AdminHeader";
+import { Footer } from "./components/Footer";
 
 const inter = Inter({
     subsets: ["latin"],
@@ -37,10 +38,11 @@ export default function RootLayout({
                 <title>Restaurant</title>
             </head>
             <body
-                className={`antialiased min-h-screen flex flex-col `}
+                className={`antialiased min-h-screen flex flex-col justify-between`}
             >
                 <Header />
                 {children}
+                <Footer />
             </body>
         </html>
     );
