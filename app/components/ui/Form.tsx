@@ -1,8 +1,13 @@
-import { UseFormRegister } from "react-hook-form";
+import { JSX } from "react";
+import {
+    FieldValues,
+    Path,
+    UseFormRegister,
+} from "react-hook-form";
 
-interface FormLabelProps<> {
-    title: string;
-    register: UseFormRegister<any>;
+interface FormLabelProps<TFieldValue extends FieldValues> {
+    title: Path<TFieldValue>;
+    register: UseFormRegister<TFieldValue>;
     label: string;
     type?: string;
     required?: boolean;
@@ -17,7 +22,9 @@ interface FormSubmitProps {
 export const Form = {
     Container: FormContainer,
     Title: FormTitle,
-    Label: FormLabel,
+    Label: FormLabel as <TFieldValue extends FieldValues>(
+        props: FormLabelProps<TFieldValue>
+    ) => JSX.Element,
     Submit: FormSubmit,
 };
 
@@ -45,14 +52,14 @@ function FormTitle({
     );
 }
 
-function FormLabel({
+function FormLabel<TFieldValue extends FieldValues>({
     title,
     register,
     label,
     type = "text",
     required = false,
     error,
-}: FormLabelProps) {
+}: FormLabelProps<TFieldValue>) {
     const inputProps = register
         ? register(title, {
               required: required && `${label} is required`,
