@@ -1,7 +1,7 @@
-import { FoodProps } from "@/app/componets/ui/Food";
+import { Food } from "@/types";
 
 export const storageFoods = {
-    get(): FoodProps[] {
+    get(): Food[] {
         try {
             const data = localStorage.getItem("foods");
             return data ? JSON.parse(data) : [];
@@ -9,7 +9,7 @@ export const storageFoods = {
             return [];
         }
     },
-    add(food: FoodProps) {
+    add(food: Food) {
         const foods = this.get();
         foods.push(food);
         localStorage.setItem(
