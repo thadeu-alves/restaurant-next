@@ -50,7 +50,7 @@ export function FeaturedFoods() {
         <div className="p-12 space-y-6 container mx-auto lg:space-y-12">
             <div className="space-y-2 text-center lg:space-y-4">
                 <PageTitle.Title invert={false}>
-                    FeaturedFoods
+                    Featured Foods
                 </PageTitle.Title>
                 <PageTitle.Sub invert={false}>
                     Lorem Ipsum is simply dummy text of the
