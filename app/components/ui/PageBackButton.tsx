@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 
-export function PageBackButton({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+export function PageBackButton() {
     return (
         <div
             onClick={() => {
@@ -24,7 +20,7 @@ export function PageBackButton({
                 />
             </button>
             <h1 className="font-medium text-xl text-primary ">
-                {children}
+                Back
             </h1>
         </div>
     );

@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Food } from "./ui/Food";
-import { Category, Food as FoodProps } from "@/types";
+import { Category, IFood } from "@/types";
 import { FoodList } from "./ui/FoodList";
 import { PageTitle } from "./ui/PageTitle";
 import { connection } from "@/lib/connection";
 
 export function FeaturedFoods() {
-    const [foods, setFoods] = useState<FoodProps[]>();
+    const [foods, setFoods] = useState<IFood[]>();
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -23,7 +22,7 @@ export function FeaturedFoods() {
                 );
 
                 const sortedFoods = allFoods.sort(
-                    (a: FoodProps, b: FoodProps) =>
+                    (a: IFood, b: IFood) =>
                         a.price - b.price
                 );
 
@@ -42,10 +41,6 @@ export function FeaturedFoods() {
         fetchData();
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <div className="p-12 space-y-6 container mx-auto lg:space-y-12">
             <div className="space-y-2 text-center lg:space-y-4">
@@ -57,24 +52,10 @@ export function FeaturedFoods() {
                     printing and typesetting industry.
                 </PageTitle.Sub>
             </div>
-            <FoodList>
-                {foods
-                    ?.slice(0, 6)
-                    .map(({ title, price, urlImg }, id) => {
-                        return (
-                            <Food
-                                id={id}
-                                title={title}
-                                categoryId={0}
-                                price={price}
-                                urlImg={urlImg}
-                                key={id}
-                                showButton
-                                quantity={1}
-                            />
-                        );
-                    })}
-            </FoodList>
+            <FoodList
+                foods={foods ? foods.slice(0, 6) : []}
+                loading={loading}
+            />
         </div>
     );
 }

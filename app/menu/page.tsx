@@ -1,12 +1,12 @@
-import { FoodListMenu } from "../components/FoodListMenu";
+import { MenuFoods } from "../components/MenuFoods";
 import { PageBackButton } from "../components/ui/PageBackButton";
 import { ButtonLink } from "../components/ui/ButtonLink";
 import { PageTitle } from "../components/ui/PageTitle";
 
 export default function page() {
     return (
-        <div className="p-12 space-y-8 container mx-auto lg:space-y-12">
-            <PageBackButton>Restaurant</PageBackButton>
+        <div className="p-12 space-y-8 container mx-auto lg:space-y-18">
+            <PageBackButton />
             <div className="text-center space-y-4">
                 <PageTitle.Title invert={false}>
                     Special Menu
@@ -16,7 +16,7 @@ export default function page() {
                     printing and typesetting industry.
                 </PageTitle.Sub>
             </div>
-            <FoodListMenu />
+            <MenuFoods />
             <div className="max-w-80 mx-auto mt-6">
                 <ButtonLink color="bg-green-500">
                     DELIVERY NOW

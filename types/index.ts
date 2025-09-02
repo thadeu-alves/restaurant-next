@@ -1,16 +1,17 @@
 export interface Category {
     id: number;
     name: string;
-    foods?: Food[]; // Opcional porque é um relacionamento
+    foods?: IFood[];
 }
 
-export interface Food {
+export interface IFood {
     id: number;
     title: string;
     price: number;
     urlImg: string;
     categoryId: number;
     category?: Category;
+    quantity?: number;
 }
 
 export interface Evento {

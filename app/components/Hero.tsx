@@ -26,7 +26,7 @@ export function Hero() {
                         industry.
                     </PageTitle.Sub>
                     <Link
-                        className="text-primary bg-white px-4 py-2 font-medium rounded-tr-2xl lg:text-xl lg:px-6 lg:py-3"
+                        className="text-primary bg-white px-4 py-2 font-medium rounded-tr-2xl lg:text-xl lg:px-6 lg:py-3 hover:bg-gray-100"
                         href="/menu"
                     >
                         Order Now

@@ -1,7 +1,8 @@
 "use client";
-import { storageFoods } from "@/lib/storage";
-import { Food as FoodProp } from "@/types";
+import { storage } from "@/lib/storage";
+import { IFood } from "@/types";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export function Food({
@@ -9,15 +10,18 @@ export function Food({
     price,
     categoryId,
     urlImg,
-    showButton = true,
     quantity = 1,
-}: FoodProp & { showButton: boolean; quantity: number }) {
+}: IFood) {
     const [loading, setLoading] = useState(false);
     const [carded, setCarded] = useState(false);
 
+    const path = usePathname();
+
+    console.log(path);
+
     function handleAdd() {
         setLoading(true);
-        storageFoods.add({
+        storage.add({
             title,
             price,
             categoryId,
@@ -47,14 +51,14 @@ export function Food({
                     R$
                     {price}
                 </h2>
-                {showButton && (
+                {path != "/cart" && (
                     <button
                         onClick={handleAdd}
-                        className={`text-primary font-medium py-1 rounded-2xl px-2 w-full max-w-40 mx-auto ${
+                        className={`cursor-pointer text-primary font-medium py-1 rounded-2xl px-2 w-full max-w-40 mx-auto ${
                             loading
                                 ? "bg-gray-300"
                                 : "bg-white"
-                        }`}
+                        } hover:bg-gray-300`}
                         disabled={loading}
                     >
                         <span className="">

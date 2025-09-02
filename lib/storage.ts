@@ -1,11 +1,12 @@
 import { Food } from "@/types";
 
-export const storageFoods = {
+export const storage = {
     get(): Food[] {
         try {
             const data = localStorage.getItem("foods");
             return data ? JSON.parse(data) : [];
-        } catch {
+        } catch (err) {
+            console.log(err);
             return [];
         }
     },
