@@ -15,7 +15,9 @@ export function MenuFoods() {
         setLoading(true);
         async function fetchData() {
             try {
-                const res = await connection.get("/foods");
+                const res = await connection.get(
+                    "/categories"
+                );
                 const { data } = await res.json();
                 setCategorias(data);
             } catch (err) {
