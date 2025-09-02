@@ -1,5 +1,5 @@
 export const connection = {
-    baseUrl: process.env.LOCAL
+    baseUrl: process.env.NEXT_PUBLIC_LOCAL
         ? "http://localhost:3000/api"
         : "https://clickrestaurant.vercel.app/api",
     async get(route: string) {
