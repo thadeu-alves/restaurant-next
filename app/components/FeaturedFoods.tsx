@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Category, IFood } from "@/types";
+import { IFood } from "@/types";
 import { FoodList } from "./ui/FoodList";
 import { PageTitle } from "./ui/PageTitle";
 import { connection } from "@/lib/connection";
@@ -17,16 +17,7 @@ export function FeaturedFoods() {
                 const res = await connection.get("/foods");
                 const { data } = await res.json();
 
-                const allFoods = data.flatMap(
-                    (categoria: Category) => categoria.foods
-                );
-
-                const sortedFoods = allFoods.sort(
-                    (a: IFood, b: IFood) =>
-                        a.price - b.price
-                );
-
-                setFoods(sortedFoods);
+                setFoods(data);
             } catch (err) {
                 console.log(
                     err instanceof Error

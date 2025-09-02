@@ -7,21 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Food {
+  id          String       @id @default(uuid())
+  title      String
+  price       Float
+  urlImg      String
+  categoryId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
 model Category {
   id      Int      @id @default(autoincrement())
   name    String   @unique
   foods Food[]
 }
-
-model Food {
-  id          Int       @id @default(autoincrement())
-  title      String
-  price       Float
-  urlImg      String
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
-}
-
 
 model Transaction {
   id          Int      @id @default(autoincrement())
