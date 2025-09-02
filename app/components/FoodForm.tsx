@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form } from "./ui/Form";
@@ -52,7 +53,7 @@ export function FoodForm({
             name: string;
         }>
     >([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
     const {
@@ -86,7 +87,7 @@ export function FoodForm({
     }, []);
 
     async function onSubmit(data: FoodFormData) {
-        setIsLoading(true);
+        setLoading(true);
         setError("");
 
         try {
@@ -98,8 +99,8 @@ export function FoodForm({
                           categoryId: Number(
                               data.categoryId
                           ),
+                          id: id?.toString(),
                           price: Number(data.price),
-                          id: Number(id),
                       })
                   )
                 : await connection.post(
@@ -128,12 +129,12 @@ export function FoodForm({
                     ? err.message
                     : "An unknown error occurred"
             );
-        } finally {
-            setTimeout(() => {
-                window.location.reload();
-                setIsLoading(false);
-            }, 500);
-        }
+        } // finally {
+        //     setTimeout(() => {
+        //         window.location.reload();
+        //         setLoading(false);
+        //     }, 500);
+        // }
     }
 
     return (
@@ -209,7 +210,7 @@ export function FoodForm({
                 />
 
                 <Form.Submit
-                    isLoading={isLoading}
+                    isLoading={loading}
                     text="Add Food Item"
                 />
             </form>

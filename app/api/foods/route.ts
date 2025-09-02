@@ -3,7 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     try {
-        const data = await prisma.food.findMany({});
+        const data = await prisma.food.findMany({
+            orderBy: {
+                updatedAt: "desc",
+            },
+        });
 
         return NextResponse.json({
             data,
@@ -20,17 +24,8 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
-        const { title, price, categoryId, urlImg, all } =
+        const { title, price, categoryId, urlImg } =
             await req.json();
-
-        if (all) {
-            const data = await prisma.food.findMany();
-
-            return NextResponse.json(
-                { data },
-                { status: 201 }
-            );
-        }
 
         if (!title || !price || !categoryId) {
             return NextResponse.json(
@@ -80,6 +75,7 @@ export async function PUT(req: Request) {
                 price,
                 categoryId,
                 urlImg,
+                updatedAt: new Date().toISOString(),
             },
         });
 

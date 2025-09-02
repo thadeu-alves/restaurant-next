@@ -2,28 +2,27 @@
 
 import { FoodForm } from "@/app/components/FoodForm";
 import { connection } from "@/lib/connection";
-import { Food } from "@/types";
+import { IFood } from "@/types";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function Page() {
     const params = useParams();
     const id = params.id as string;
-    const [data, setData] = useState<Food[]>([]);
+    const [data, setData] = useState<IFood>();
 
     const router = useRouter();
 
     useEffect(() => {
         async function fetchData() {
-            const res = await connection.post(
-                "/comida",
-                JSON.stringify({
-                    id: parseInt(id),
-                })
+            const res = await connection.get(
+                `/foods/${id}`
             );
-            const da = await res.json();
-            setData(da);
+            const { data } = await res.json();
+
+            setData(data);
         }
+
         fetchData();
     }, [id]);
 
@@ -41,7 +40,7 @@ export default function Page() {
                     }),
                 }
             );
-            const data = res.json();
+            const data = await res.json();
             console.log(data);
         } catch (err) {
             console.log(
@@ -56,12 +55,12 @@ export default function Page() {
 
     return (
         <div className="flex-1 p-12 space-y-8 my-auto">
-            {data[0] && (
+            {data && (
                 <FoodForm
-                    categoryId={data[0]?.categoryId.toString()}
-                    price={data[0]?.price}
-                    title={data[0]?.title}
-                    urlImg={data[0]?.urlImg}
+                    categoryId={data?.categoryId.toString()}
+                    price={data?.price}
+                    title={data?.title}
+                    urlImg={data?.urlImg}
                     id={parseInt(id)}
                     isUpdate={true}
                 />

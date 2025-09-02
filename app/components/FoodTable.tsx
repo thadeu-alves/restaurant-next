@@ -2,17 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { FoodTableRow } from "./ui/FoodTableRow";
-import { Food as FoodProps } from "@/types";
 import Image from "next/image";
 import { Table } from "./ui/Table";
 import { connection } from "@/lib/connection";
+import { IFood } from "@/types";
 
 export function FoodTable() {
-    const [foods, setFoods] = useState<FoodProps[]>([]);
+    const [foods, setFoods] = useState<IFood[]>([]);
     const [loading, setLoading] = useState(false);
-    const [filtered, setFiltered] = useState<FoodProps[]>(
-        []
-    );
+    const [filtered, setFiltered] = useState<IFood[]>([]);
     const [sortDirection, setSortDirection] = useState<
         "asc" | "desc"
     >("asc");
@@ -24,14 +22,8 @@ export function FoodTable() {
         setLoading(true);
         async function fetchData() {
             try {
-                const res = await connection.post(
-                    "/foods",
-                    JSON.stringify({
-                        all: true,
-                    })
-                );
+                const res = await connection.get("/foods");
                 const { data } = await res.json();
-                console.log(data);
                 setFoods(data);
             } catch (err) {
                 console.log(err);
