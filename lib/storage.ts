@@ -1,7 +1,7 @@
-import { Food } from "@/types";
+import { IFood } from "@/types";
 
 export const storage = {
-    get(): Food[] {
+    get(): IFood[] {
         try {
             const data = localStorage.getItem("foods");
             return data ? JSON.parse(data) : [];
@@ -10,7 +10,7 @@ export const storage = {
             return [];
         }
     },
-    add(food: Food) {
+    add(food: IFood) {
         const foods = this.get();
         foods.push(food);
         localStorage.setItem(
