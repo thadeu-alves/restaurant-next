@@ -33,7 +33,7 @@ export function FeaturedFoods() {
     }, []);
 
     return (
-        <div className="p-12 space-y-6 container mx-auto lg:space-y-12">
+        <div className="py-8 px-12 space-y-6 container mx-auto lg:space-y-12">
             <div className="space-y-2 text-center lg:space-y-4">
                 <PageTitle.Title invert={false}>
                     Featured Foods
