@@ -24,7 +24,7 @@ export function Footer() {
     return (
         <div className={`bg-primary`}>
             <nav
-                className={`flex justify-between bg-primary px-12 py-3  container mx-auto lg:py-8`}
+                className={`bg-primary space-y-8 px-12 py-8 container mx-auto md:flex md:justify-between lg:py-8`}
             >
                 <div>
                     <Link href="/">
