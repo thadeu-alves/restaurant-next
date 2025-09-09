@@ -24,15 +24,17 @@ function PageTitleH1({
 function PageTitleH2({
     children,
     invert,
+    className,
 }: {
     children: React.ReactNode;
     invert: boolean;
+    className?: string;
 }) {
     return (
         <h2
             className={`lg:text-xl ${
                 invert ? "text-white" : "text-primary"
-            } font-light`}
+            } font-light ${className}`}
         >
             {children}
         </h2>
