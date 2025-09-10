@@ -3,9 +3,9 @@ import { storage } from "@/lib/storage";
 import { ButtonLink } from "../components/ui/ButtonLink";
 import { PageBackButton } from "../components/ui/PageBackButton";
 import Link from "next/link";
-import { PageTitle } from "../components/ui/PageTitle";
 import { FoodList } from "../components/ui/FoodList";
 import { IFood } from "@/types";
+import { Section } from "../components/ui/Section";
 
 function quantityFoods(foods: IFood[]): IFood[] {
     return foods.reduce((acumulador: IFood[], actual) => {
@@ -41,13 +41,13 @@ export default function page() {
             <PageBackButton />
 
             <div className="text-center space-y-4">
-                <PageTitle.Title invert={false}>
+                <Section.Title invert={false}>
                     Your Cart
-                </PageTitle.Title>
-                <PageTitle.Sub invert={false}>
+                </Section.Title>
+                <Section.Sub invert={false}>
                     Lorem Ipsum is simply dummy text of the
                     printing and typesetting industry.
-                </PageTitle.Sub>
+                </Section.Sub>
             </div>
 
             {foods?.length > 0 ? (

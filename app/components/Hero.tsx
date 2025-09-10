@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PageTitle } from "./ui/PageTitle";
+import { Section } from "./ui/Section";
 
 export function Hero() {
     return (
@@ -15,19 +15,19 @@ export function Hero() {
                 />
 
                 <div className="space-y-4 md:space-y-6 lg:space-y-8 lg:my-auto">
-                    <PageTitle.Title invert>
+                    <Section.Title invert>
                         Every Nigth <br /> Sparkles With
                         Adbi
-                    </PageTitle.Title>
+                    </Section.Title>
                     <hr className="bg-gray-50 h-0.5 w-full max-w-100" />
-                    <PageTitle.Sub
+                    <Section.Sub
                         invert
                         className="max-w-80"
                     >
                         Lorem Ipsum is simply dummy text of
                         the printing and typesetting
                         industry.
-                    </PageTitle.Sub>
+                    </Section.Sub>
                     <Link
                         className="text-primary bg-white px-4 py-2 font-medium rounded-tr-2xl lg:text-xl lg:px-6 lg:py-3 hover:bg-gray-100"
                         href="/menu"

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { IFood } from "@/types";
 import { FoodList } from "./ui/FoodList";
-import { PageTitle } from "./ui/PageTitle";
 import { connection } from "@/lib/connection";
+import { Section } from "./ui/Section";
 
 export function FeaturedFoods() {
     const [foods, setFoods] = useState<IFood[]>();
@@ -33,20 +33,20 @@ export function FeaturedFoods() {
     }, []);
 
     return (
-        <div className="py-8 px-12 space-y-6 container mx-auto lg:space-y-12">
-            <div className="space-y-2 text-center lg:space-y-4">
-                <PageTitle.Title invert={false}>
+        <Section.Container>
+            <Section.Header>
+                <Section.Title invert={false}>
                     Featured Foods
-                </PageTitle.Title>
-                <PageTitle.Sub invert={false}>
+                </Section.Title>
+                <Section.Sub invert={false}>
                     Lorem Ipsum is simply dummy text of the
                     printing and typesetting industry.
-                </PageTitle.Sub>
-            </div>
+                </Section.Sub>
+            </Section.Header>
             <FoodList
                 foods={foods ? foods.slice(0, 6) : []}
                 loading={loading}
             />
-        </div>
+        </Section.Container>
     );
 }
