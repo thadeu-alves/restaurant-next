@@ -1,7 +1,33 @@
-export const PageTitle = {
+export const Section = {
+    Container: PageContainer,
+    Header: PageHeader,
     Title: PageTitleH1,
     Sub: PageTitleH2,
 };
+
+function PageContainer({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <div className="py-8 px-12 space-y-6 container mx-auto lg:space-y-12">
+            {children}
+        </div>
+    );
+}
+
+function PageHeader({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <div className="space-y-2 text-center lg:space-y-4">
+            {children}
+        </div>
+    );
+}
 
 function PageTitleH1({
     children,
