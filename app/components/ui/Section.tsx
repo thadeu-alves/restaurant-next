@@ -38,7 +38,7 @@ function PageTitleH1({
 }) {
     return (
         <h1
-            className={`text-3xl font-medium lg:text-4xl ${
+            className={`text-3xl font-bold lg:text-4xl ${
                 invert ? "text-white" : "text-primary"
             }`}
         >
