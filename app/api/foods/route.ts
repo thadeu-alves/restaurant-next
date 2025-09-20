@@ -24,14 +24,21 @@ export async function GET() {
 
 export async function POST(req: Request) {
     try {
-        const { title, price, categoryId, urlImg } =
-            await req.json();
+        const {
+            title,
+            price,
+            categoryId,
+            urlImg,
+            description,
+        } = await req.json();
 
-        if (!title || !price || !categoryId) {
-            return NextResponse.json(
-                { error: "Missing props!" },
-                { status: 400 }
-            );
+        if (
+            !title ||
+            !price ||
+            !categoryId ||
+            !description
+        ) {
+            throw new Error("Missing props.");
         }
 
         const food = await prisma.food.create({
@@ -45,9 +52,17 @@ export async function POST(req: Request) {
 
         return NextResponse.json(food, { status: 201 });
     } catch (err) {
+        if (err instanceof Error) {
+            return NextResponse.json(
+                {
+                    error: err.message,
+                },
+                { status: 400 }
+            );
+        }
         return NextResponse.json(
             {
-                error: "Falha ao criar comida: " + err,
+                error: "Internal server error",
             },
             { status: 500 }
         );
@@ -56,14 +71,23 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
     try {
-        const { title, price, categoryId, urlImg, id } =
-            await req.json();
+        const {
+            title,
+            price,
+            categoryId,
+            urlImg,
+            id,
+            description,
+        } = await req.json();
 
-        if (!title || !price || !categoryId || !id) {
-            return NextResponse.json(
-                { error: "Missing props!" },
-                { status: 400 }
-            );
+        if (
+            !title ||
+            !price ||
+            !categoryId ||
+            !id ||
+            !description
+        ) {
+            throw new Error("Missing props.");
         }
 
         const food = await prisma.food.update({
@@ -81,11 +105,17 @@ export async function PUT(req: Request) {
 
         return NextResponse.json(food, { status: 200 });
     } catch (err) {
+        if (err instanceof Error) {
+            return NextResponse.json(
+                {
+                    error: err.message,
+                },
+                { status: 400 }
+            );
+        }
         return NextResponse.json(
             {
-                error:
-                    "Falha ao fazer update em comida: " +
-                    err,
+                error: "Internal server error",
             },
             { status: 500 }
         );
@@ -97,10 +127,7 @@ export async function DELETE(req: Request) {
         const { id } = await req.json();
 
         if (!id) {
-            return NextResponse.json(
-                { error: "Missing id prop!" },
-                { status: 400 }
-            );
+            throw new Error("Missing id prop.");
         }
 
         const food = await prisma.food.deleteMany({
@@ -111,13 +138,19 @@ export async function DELETE(req: Request) {
 
         return NextResponse.json(food, { status: 200 });
     } catch (err) {
+        if (err instanceof Error) {
+            return NextResponse.json(
+                {
+                    error: err.message,
+                },
+                { status: 400 }
+            );
+        }
         return NextResponse.json(
             {
-                error: "Falha ao deletar comida" + err,
+                error: "Internal server error",
             },
-            {
-                status: 500,
-            }
+            { status: 500 }
         );
     }
 }

@@ -2,6 +2,7 @@ export interface Category {
     id: number;
     name: string;
     foods?: IFood[];
+    urlImg?: string;
 }
 
 export interface IFood {
@@ -10,12 +11,7 @@ export interface IFood {
     price: number;
     urlImg: string;
     categoryId: number;
+    description?: string;
     category?: Category;
     quantity?: number;
-}
-
-export interface Evento {
-    id: number;
-    date: Date;
-    description: string | null;
 }
