@@ -1,8 +1,16 @@
-abstract class ApiError extends Error {
+export abstract class ApiError extends Error {
     constructor(private msg: string, private stt: number) {
         super(msg);
-        Object.setPrototypeOf(this, ApiError.prototype);
-        Error.captureStackTrace(this, ApiError);
+        this.msg = msg;
+        this.stt = stt;
+    }
+
+    getMsg() {
+        return this.msg;
+    }
+
+    getStt() {
+        return this.stt;
     }
 }
 
@@ -14,6 +22,6 @@ export class BadRequestError extends ApiError {
 
 export class NotFoundError extends ApiError {
     constructor(msg: string) {
-        super(msg, 400);
+        super(msg, 404);
     }
 }

@@ -1,3 +1,8 @@
+import {
+    ApiError,
+    BadRequestError,
+    NotFoundError,
+} from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -9,10 +14,22 @@ export async function GET() {
             },
         });
 
+        if (!data) {
+            throw new NotFoundError("No foods finded.");
+        }
+
         return NextResponse.json({
             data,
         });
     } catch (err) {
+        if (err instanceof ApiError) {
+            return NextResponse.json(
+                {
+                    error: err.getMsg(),
+                },
+                { status: err.getStt() }
+            );
+        }
         return NextResponse.json(
             {
                 error: "Falha ao retornar comida: " + err,
@@ -38,7 +55,7 @@ export async function POST(req: Request) {
             !categoryId ||
             !description
         ) {
-            throw new Error("Missing props.");
+            throw new BadRequestError("Missing props.");
         }
 
         const food = await prisma.food.create({
@@ -52,12 +69,12 @@ export async function POST(req: Request) {
 
         return NextResponse.json(food, { status: 201 });
     } catch (err) {
-        if (err instanceof Error) {
+        if (err instanceof ApiError) {
             return NextResponse.json(
                 {
-                    error: err.message,
+                    error: err.getMsg(),
                 },
-                { status: 400 }
+                { status: err.getStt() }
             );
         }
         return NextResponse.json(
@@ -87,7 +104,7 @@ export async function PUT(req: Request) {
             !id ||
             !description
         ) {
-            throw new Error("Missing props.");
+            throw new BadRequestError("Missing props.");
         }
 
         const food = await prisma.food.update({
@@ -105,12 +122,12 @@ export async function PUT(req: Request) {
 
         return NextResponse.json(food, { status: 200 });
     } catch (err) {
-        if (err instanceof Error) {
+        if (err instanceof ApiError) {
             return NextResponse.json(
                 {
-                    error: err.message,
+                    error: err.getMsg(),
                 },
-                { status: 400 }
+                { status: err.getStt() }
             );
         }
         return NextResponse.json(
@@ -127,7 +144,7 @@ export async function DELETE(req: Request) {
         const { id } = await req.json();
 
         if (!id) {
-            throw new Error("Missing id prop.");
+            throw new BadRequestError("Missing id prop.");
         }
 
         const food = await prisma.food.deleteMany({
@@ -138,12 +155,12 @@ export async function DELETE(req: Request) {
 
         return NextResponse.json(food, { status: 200 });
     } catch (err) {
-        if (err instanceof Error) {
+        if (err instanceof ApiError) {
             return NextResponse.json(
                 {
-                    error: err.message,
+                    error: err.getMsg(),
                 },
-                { status: 400 }
+                { status: err.getStt() }
             );
         }
         return NextResponse.json(

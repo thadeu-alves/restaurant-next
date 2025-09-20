@@ -1,3 +1,4 @@
+import { ApiError, NotFoundError } from "@/lib/errors";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -17,19 +18,19 @@ export async function GET(
         });
 
         if (!data) {
-            throw new Error("Food don't exists.");
+            throw new NotFoundError("Food not finded.");
         }
 
         return NextResponse.json({
             data,
         });
     } catch (err) {
-        if (err instanceof Error) {
+        if (err instanceof ApiError) {
             return NextResponse.json(
                 {
-                    error: err.message,
+                    error: err.getMsg(),
                 },
-                { status: 400 }
+                { status: err.getStt() }
             );
         }
         return NextResponse.json(
