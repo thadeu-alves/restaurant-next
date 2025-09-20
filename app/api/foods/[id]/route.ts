@@ -16,10 +16,22 @@ export async function GET(
             where: { id },
         });
 
+        if (!data) {
+            throw new Error("Food don't exists.");
+        }
+
         return NextResponse.json({
             data,
         });
     } catch (err) {
+        if (err instanceof Error) {
+            return NextResponse.json(
+                {
+                    error: err.message,
+                },
+                { status: 400 }
+            );
+        }
         return NextResponse.json(
             {
                 error: "Falha ao retornar comida: " + err,
