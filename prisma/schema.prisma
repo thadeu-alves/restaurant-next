@@ -10,6 +10,7 @@ datasource db {
 model Food {
   id          String       @id @default(uuid())
   title      String
+  description String @default("")
   price       Float
   urlImg      String
   categoryId Int
@@ -23,6 +24,7 @@ model Food {
 model Category {
   id      Int      @id @default(autoincrement())
   name    String   @unique
+  urlImg String @default("")
   foods Food[]
 }
 
