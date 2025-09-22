@@ -1,5 +1,5 @@
+import { errorHandler } from "@/lib/errorHandler";
 import {
-    ApiError,
     BadRequestError,
     NotFoundError,
 } from "@/lib/errors";
@@ -22,20 +22,7 @@ export async function GET() {
             data,
         });
     } catch (err) {
-        if (err instanceof ApiError) {
-            return NextResponse.json(
-                {
-                    error: err.getMsg(),
-                },
-                { status: err.getStt() }
-            );
-        }
-        return NextResponse.json(
-            {
-                error: "Falha ao retornar comida: " + err,
-            },
-            { status: 500 }
-        );
+        errorHandler(err);
     }
 }
 
@@ -69,20 +56,7 @@ export async function POST(req: Request) {
 
         return NextResponse.json(food, { status: 201 });
     } catch (err) {
-        if (err instanceof ApiError) {
-            return NextResponse.json(
-                {
-                    error: err.getMsg(),
-                },
-                { status: err.getStt() }
-            );
-        }
-        return NextResponse.json(
-            {
-                error: "Internal server error",
-            },
-            { status: 500 }
-        );
+        errorHandler(err);
     }
 }
 
@@ -122,20 +96,7 @@ export async function PUT(req: Request) {
 
         return NextResponse.json(food, { status: 200 });
     } catch (err) {
-        if (err instanceof ApiError) {
-            return NextResponse.json(
-                {
-                    error: err.getMsg(),
-                },
-                { status: err.getStt() }
-            );
-        }
-        return NextResponse.json(
-            {
-                error: "Internal server error",
-            },
-            { status: 500 }
-        );
+        errorHandler(err);
     }
 }
 
@@ -155,19 +116,6 @@ export async function DELETE(req: Request) {
 
         return NextResponse.json(food, { status: 200 });
     } catch (err) {
-        if (err instanceof ApiError) {
-            return NextResponse.json(
-                {
-                    error: err.getMsg(),
-                },
-                { status: err.getStt() }
-            );
-        }
-        return NextResponse.json(
-            {
-                error: "Internal server error",
-            },
-            { status: 500 }
-        );
+        errorHandler(err);
     }
 }
