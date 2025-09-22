@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Section } from "./ui/Section";
+import { LinkUi } from "./ui/Link";
 
 export function SocialSection() {
     return (
@@ -32,9 +33,7 @@ export function SocialSection() {
                             industry.
                         </p>
                     </div>
-                    <div className="bg-primary text-white font-bold w-fit h-fit px-8 py-4 rounded-full cursor-pointer text-nowrap">
-                        My Website
-                    </div>
+                    <LinkUi href="">My Website</LinkUi>
                 </div>
                 <div className="space-y-4">
                     <Image
@@ -54,9 +53,7 @@ export function SocialSection() {
                             industry.
                         </p>
                     </div>
-                    <div className="bg-primary text-white font-bold w-fit h-fit px-8 py-4 rounded-full cursor-pointer text-nowrap">
-                        Link
-                    </div>
+                    <LinkUi href="">Link</LinkUi>
                 </div>
             </div>
         </Section.Container>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { LinkUi } from "./ui/Link";
 
 export function PartnerSection() {
     return (
@@ -15,18 +16,18 @@ export function PartnerSection() {
                         industry.
                     </p>
                 </div>
-                <div>
-                    <Image
-                        alt="Restaurant inside"
-                        src="/lounge.jpg"
-                        width={1900}
-                        height={1200}
-                        className="w-full h-80 object-cover rounded md:h-100"
-                    />
-                </div>
-                <div className="space-y-4 lg:flex lg:items-center lg:gap-12">
-                    <div className="bg-primary text-white font-bold w-fit h-fit px-8 py-4 rounded-full cursor-pointer text-nowrap">
-                        Partner With Us
+                <Image
+                    alt="Restaurant inside"
+                    src="/lounge.jpg"
+                    width={1900}
+                    height={1200}
+                    className="w-full h-80 object-cover rounded md:h-100"
+                />
+                <div className="space-y-8 lg:flex lg:items-center lg:gap-12">
+                    <div>
+                        <LinkUi href="">
+                            Partner With Us
+                        </LinkUi>
                     </div>
                     <ul className="border-y border-y-[var(--primary)] py-8 flex flex-col gap-8 md:flex-row">
                         <li className="font-black text-2xl">

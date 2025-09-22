@@ -5,6 +5,7 @@ import { IFood } from "@/types";
 import { FoodList } from "./ui/FoodList";
 import { connection } from "@/lib/connection";
 import { Section } from "./ui/Section";
+import { LinkUi } from "./ui/Link";
 
 export function FeaturedFoods() {
     const [foods, setFoods] = useState<IFood[]>();
@@ -47,6 +48,9 @@ export function FeaturedFoods() {
                 foods={foods ? foods.slice(0, 6) : []}
                 loading={loading}
             />
+            <div className="w-full flex justify-center">
+                <LinkUi href="/menu">Special Menu</LinkUi>
+            </div>
         </Section.Container>
     );
 }
