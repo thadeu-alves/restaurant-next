@@ -43,7 +43,7 @@ export function MenuFoods() {
                             key={cat.id}
                             className="space-y-6 mb-6 container mx-auto"
                         >
-                            <h1 className="text-center text-primary text-lg uppercase">
+                            <h1 className="text-primary text-lg font-bold uppercase">
                                 {cat.name}
                             </h1>
                             <FoodList
