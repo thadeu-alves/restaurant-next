@@ -1,6 +1,5 @@
 import { CategoriesList } from "../components/CategoriesList";
 import { MenuFoods } from "../components/MenuFoods";
-import { ButtonLink } from "../components/ui/ButtonLink";
 import { Header } from "../components/ui/Header";
 
 export default function page() {
@@ -9,11 +8,6 @@ export default function page() {
             <Header />
             <CategoriesList />
             <MenuFoods />
-            <div className="max-w-80 mx-auto mt-6">
-                <ButtonLink color="bg-green-500">
-                    DELIVERY NOW
-                </ButtonLink>
-            </div>
         </div>
     );
 }

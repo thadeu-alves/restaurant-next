@@ -1,25 +1,21 @@
 "use client";
 
-import { Category } from "@/types";
+import { IFood } from "@/types";
 import { useEffect, useState } from "react";
 import { FoodList } from "./ui/FoodList";
 import { connection } from "@/lib/connection";
 
 export function MenuFoods() {
-    const [categorias, setCategorias] = useState<
-        Category[]
-    >([]);
+    const [data, setData] = useState<IFood[]>([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
         async function fetchData() {
             try {
-                const res = await connection.get(
-                    "/categories"
-                );
+                const res = await connection.get("/foods");
                 const { data } = await res.json();
-                setCategorias(data);
+                setData(data);
             } catch (err) {
                 console.log(err);
             } finally {
@@ -37,22 +33,12 @@ export function MenuFoods() {
                     Loading...
                 </div>
             ) : (
-                categorias?.map((cat) => {
-                    return (
-                        <div
-                            key={cat.id}
-                            className="space-y-6 mb-6 container mx-auto"
-                        >
-                            <h1 className="text-primary text-lg font-bold uppercase">
-                                {cat.name}
-                            </h1>
-                            <FoodList
-                                foods={cat.foods || []}
-                                loading={false}
-                            />
-                        </div>
-                    );
-                })
+                data && (
+                    <FoodList
+                        foods={data}
+                        loading={loading}
+                    />
+                )
             )}
         </div>
     );

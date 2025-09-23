@@ -10,7 +10,7 @@ export async function GET() {
     try {
         const data = await prisma.food.findMany({
             orderBy: {
-                updatedAt: "desc",
+                title: "asc",
             },
         });
 
