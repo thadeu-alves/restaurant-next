@@ -27,19 +27,24 @@ export function MenuFoods() {
     }, []);
 
     return (
-        <div>
-            {loading ? (
-                <div className="text-center">
-                    Loading...
-                </div>
-            ) : (
-                data && (
-                    <FoodList
-                        foods={data}
-                        loading={loading}
-                    />
-                )
-            )}
+        <div className="space-y-6 container mx-auto">
+            <h1 className="text-primary text-lg font-bold uppercase">
+                Recomended
+            </h1>
+            <div>
+                {loading ? (
+                    <div className="text-center">
+                        Loading...
+                    </div>
+                ) : (
+                    data && (
+                        <FoodList
+                            foods={data}
+                            loading={loading}
+                        />
+                    )
+                )}
+            </div>
         </div>
     );
 }
