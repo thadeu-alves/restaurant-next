@@ -32,17 +32,11 @@ export function MenuFoods() {
                 Recomended
             </h1>
             <div>
-                {loading ? (
-                    <div className="text-center">
-                        Loading...
-                    </div>
-                ) : (
-                    data && (
-                        <FoodList
-                            foods={data}
-                            loading={loading}
-                        />
-                    )
+                {data && (
+                    <FoodList
+                        foods={data}
+                        loading={loading}
+                    />
                 )}
             </div>
         </div>

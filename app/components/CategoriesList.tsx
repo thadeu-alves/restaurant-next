@@ -5,6 +5,7 @@ import { Category } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Loading } from "./ui/Loading";
 export function CategoriesList() {
     const [categories, setCategories] =
         useState<Category[]>();
@@ -34,7 +35,9 @@ export function CategoriesList() {
                 Choose Category
             </h1>
 
-            {!loading && (
+            <Loading loading={loading} />
+
+            {categories && (
                 <>
                     <div className="flex flex-wrap gap-4">
                         {categories?.map((category, id) => {

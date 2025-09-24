@@ -1,5 +1,6 @@
 import { IFood } from "@/types";
 import { Food } from "./Food";
+import { Loading } from "./Loading";
 
 interface IFoodList {
     foods: IFood[];
@@ -9,12 +10,9 @@ interface IFoodList {
 export function FoodList({ foods, loading }: IFoodList) {
     return (
         <ul className="space-y-4 grid grid-cols-1 grid-rows-1fr gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {loading ? (
-                <div className="text-center">
-                    Loading...
-                </div>
-            ) : foods ? (
-                foods?.map(
+            <Loading loading={loading} />
+            {foods ? (
+                foods.map(
                     (
                         { title, price, urlImg, quantity },
                         id

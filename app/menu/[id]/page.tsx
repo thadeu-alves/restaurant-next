@@ -1,7 +1,6 @@
 "use client";
 import { FoodList } from "@/app/components/ui/FoodList";
 import { Header } from "@/app/components/ui/Header";
-import { Loading } from "@/app/components/ui/Loading";
 import { Section } from "@/app/components/ui/Section";
 import { connection } from "@/lib/connection";
 import { Category } from "@/types";
@@ -52,13 +51,11 @@ export default function Page() {
             </div>
 
             <div>
-                <Loading loading={loading} />
-                {category && (
-                    <FoodList
-                        foods={category.foods || []}
-                        loading={loading}
-                    />
-                )}
+                <FoodList
+                    foods={category?.foods || []}
+                    loading={loading}
+                />
+
                 {error && (
                     <h1 className="font-semibold text-xl text-center">
                         {error}

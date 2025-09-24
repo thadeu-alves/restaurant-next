@@ -66,7 +66,7 @@ export function Food({
                                 ? "Adding..."
                                 : carded
                                 ? "Into your Cart!!"
-                                : "Add to Card"}
+                                : "Add to Cart"}
                         </span>
                     </button>
                 )}

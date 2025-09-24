@@ -1,13 +1,14 @@
 import { CategoriesList } from "../components/CategoriesList";
 import { MenuFoods } from "../components/MenuFoods";
 import { Header } from "../components/ui/Header";
+import { Section } from "../components/ui/Section";
 
 export default function page() {
     return (
-        <div className="p-12 space-y-6 container mx-auto lg:space-y-18">
+        <Section.Container>
             <Header />
             <CategoriesList />
             <MenuFoods />
-        </div>
+        </Section.Container>
     );
 }
