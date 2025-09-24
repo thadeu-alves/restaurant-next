@@ -42,7 +42,10 @@ export function CategoriesList() {
                     <div className="flex flex-wrap gap-4">
                         {categories?.map((category, id) => {
                             return (
-                                <Link key={id} href="">
+                                <Link
+                                    key={id}
+                                    href={`/menu/${category.id}`}
+                                >
                                     <div className="flex flex-col text-center">
                                         <div className="border border-[var(--primary)] rounded-2xl overflow-hidden">
                                             <Image
