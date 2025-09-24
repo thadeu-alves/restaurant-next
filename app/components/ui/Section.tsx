@@ -11,7 +11,7 @@ function PageContainer({
     children: React.ReactNode;
 }) {
     return (
-        <div className="py-8 px-12 space-y-6 container mx-auto lg:space-y-12">
+        <div className="p-12 space-y-6 container mx-auto lg:space-y-12">
             {children}
         </div>
     );
