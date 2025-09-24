@@ -44,7 +44,7 @@ export function CategoriesList() {
                             return (
                                 <Link
                                     key={id}
-                                    href={`/menu/${category.id}`}
+                                    href={`/categories/${category.id}`}
                                 >
                                     <div className="flex flex-col text-center">
                                         <div className="border border-[var(--primary)] rounded-2xl overflow-hidden">
