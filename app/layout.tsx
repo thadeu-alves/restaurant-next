@@ -38,7 +38,7 @@ export default function RootLayout({
                 <title>Restaurant</title>
             </head>
             <body
-                className={`antialiased min-h-screen flex flex-col justify-between`}
+                className={`antialiased min-h-screen flex flex-col justify-between text-primary`}
             >
                 <Header />
                 {children}

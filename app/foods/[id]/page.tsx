@@ -1,9 +1,10 @@
 "use client";
-import { FoodList } from "@/app/components/ui/FoodList";
+import { FoodView } from "@/app/components/ui/FoodView";
 import { Header } from "@/app/components/ui/Header";
+import { Loading } from "@/app/components/ui/Loading";
 import { Section } from "@/app/components/ui/Section";
 import { connection } from "@/lib/connection";
-import { Category } from "@/types";
+import { IFood } from "@/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -11,7 +12,7 @@ export default function Page() {
     const params = useParams();
     const id = params.id as string;
 
-    const [category, setCategory] = useState<Category>();
+    const [food, setFood] = useState<IFood>();
     const [loading, setLoading] = useState(false);
 
     const [error, setError] = useState<string | null>(null);
@@ -21,16 +22,16 @@ export default function Page() {
             setLoading(true);
             try {
                 const res = await connection.get(
-                    `/categories/${id}`
+                    `/foods/${id}`
                 );
 
                 if (!res.ok) {
-                    setError("Categoria não encontrada.");
+                    setError("Comida não encontrada.");
                 }
 
                 const { data } = await res.json();
 
-                setCategory(data);
+                setFood(data);
             } catch (err) {
                 console.log(err);
             } finally {
@@ -44,17 +45,10 @@ export default function Page() {
         <Section.Container>
             <Header />
 
-            <div className="text-center space-y-4">
-                <Section.Title invert={false}>
-                    {category?.name}
-                </Section.Title>
-            </div>
-
             <div>
-                <FoodList
-                    foods={category?.foods || []}
-                    loading={loading}
-                />
+                <Loading loading={loading} />
+
+                {food && <FoodView {...food} />}
 
                 {error && (
                     <h1 className="font-semibold text-xl text-center">
