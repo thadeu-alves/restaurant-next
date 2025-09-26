@@ -13,10 +13,14 @@ export function FoodList({ foods, loading }: IFoodList) {
             <Loading loading={loading} />
             {foods ? (
                 foods.map(
-                    (
-                        { title, price, urlImg, quantity },
-                        id
-                    ) => {
+                    ({
+                        title,
+                        price,
+                        urlImg,
+                        quantity,
+                        category,
+                        id,
+                    }) => {
                         return (
                             <Food
                                 id={id}
@@ -25,6 +29,7 @@ export function FoodList({ foods, loading }: IFoodList) {
                                 price={price}
                                 urlImg={urlImg}
                                 key={id}
+                                category={category}
                                 quantity={quantity || 1}
                             />
                         );

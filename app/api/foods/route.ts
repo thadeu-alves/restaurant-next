@@ -12,6 +12,9 @@ export async function GET() {
             orderBy: {
                 title: "asc",
             },
+            include: {
+                category: true,
+            },
         });
 
         if (!data) {
